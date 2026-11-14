@@ -49,7 +49,7 @@
   },
   {
     "id": "cca-batch-004",
-    "domain": "Context Window & Performance Optimization",
+    "domain": "Context Management & Reliability",
     "topic": "Streaming API & TTFT",
     "question": "In an interactive customer-facing web chatbot, which Anthropic API mode provides the lowest perceived latency (fastest Time-to-First-Token)?",
     "options": [
@@ -65,18 +65,18 @@
   },
   {
     "id": "cca-batch-005",
-    "domain": "Security, Guardrails & Compliance",
-    "topic": "Deterministic Tool Parameter Validation",
-    "question": "Even when Claude produces parameters matching a tool's JSON Schema, what validation layer should the backend orchestrator execute before triggering database mutations?",
+    "domain": "Prompt Engineering & Structured Output",
+    "topic": "Deterministic Schema Enforcement",
+    "question": "When building an automated ingestion pipeline that parses unstructured resume PDFs into candidate profiles, how should the schema be specified to ensure the output strictly parses in Python `pydantic` models without syntax errors?",
     "options": [
-      "No validation is necessary if Claude has temperature 0.",
-      "Deterministic server-side validation: enforce authorization checks, input sanitization, allowed value boundaries, and idempotency keys before executing state modifications.",
-      "Check that the user is logged into Discord.",
-      "Ask Claude a second time: 'Are you sure this parameter is safe?'"
+      "Ask Claude in the prompt to format as Python code.",
+      "Pass the Pydantic schema as a tool definition `input_schema` and enforce `tool_choice: {\"type\": \"tool\", \"name\": \"extract_candidate_profile\"}`.",
+      "Set `temperature: 1.0`.",
+      "Instruct Claude to use CSV format with semicolon delimiters."
     ],
     "correct": 1,
-    "explanation": "Never trust LLM outputs blindly for privileged operations. The backend execution layer must apply standard deterministic software engineering safeguards: authentication, RBAC authorization, range checks, input sanitization, and idempotency.",
-    "referenceTitle": "Anthropic Research - Building Safe and Reliable Systems",
-    "referenceUrl": "https://www.anthropic.com/research/building-effective-agents"
+    "explanation": "Using tool use with a validated JSON Schema and setting `tool_choice: {\"type\": \"tool\", \"name\": \"<tool_name>\"}` guarantees that Claude structures its entire output to conform strictly to the defined schema, completely eliminating preamble or conversational text.",
+    "referenceTitle": "Anthropic Docs - Forcing Tool Choice",
+    "referenceUrl": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use#forcing-tool-use"
   }
 ]
