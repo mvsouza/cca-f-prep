@@ -546,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnShareScore) {
       btnShareScore.onclick = () => {
         const statusEmoji = mockRecord.pass ? "🎉 PASSED" : "📚 STUDYING";
-        const shareText = `I scored ${mockRecord.scaledScore}/1000 (${statusEmoji}) on the Claude Certified Architect - Foundations (CCA-F) Mock Simulator!\n\n700+ questions, free & runs client-side in the browser.\n\nPractice here: https://matheussouza.github.io/ai-engineer/ #Claude #Anthropic #AIEngineer`;
+        const shareText = `I scored ${mockRecord.scaledScore}/1000 (${statusEmoji}) on the Claude Certified Architect - Foundations (CCA-F) Mock Simulator!\n\n700+ questions, free & runs client-side in the browser.\n\nPractice here: https://mvsouza.github.io/cca-f-prep/ #Claude #Anthropic #AIEngineer`;
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
         window.open(twitterUrl, '_blank', 'noopener,noreferrer');
         trackEvent('share_score_twitter', { scaled_score: mockRecord.scaledScore, pass: mockRecord.pass });
@@ -562,7 +562,7 @@ Raw Accuracy: ${mockRecord.correctCount}/${mockRecord.totalQuestions} (${mockRec
 Time Spent: ${Math.round(mockRecord.timeSpentSeconds / 60)} minutes
 
 Practice with 700+ questions free:
-https://matheussouza.github.io/ai-engineer/`;
+https://mvsouza.github.io/cca-f-prep/`;
 
         navigator.clipboard.writeText(copyText).then(() => {
           const original = btnCopyScore.textContent;

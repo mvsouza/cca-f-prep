@@ -1,6 +1,20 @@
 # Claude Certified Architect – Foundations (CCA-F) Prep Engine
 
-An interactive, browser-based exam simulator and spaced-repetition mastery application designed specifically for the **Anthropic Claude Certified Architect – Foundations (CCA-F / CCAR-F)** certification.
+<div align="center">
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-22c55e?style=for-the-badge&logo=github)](https://mvsouza.github.io/cca-f-prep/)
+[![GitHub Stars](https://img.shields.io/github/stars/mvsouza/cca-f-prep?style=for-the-badge&logo=github&color=d97706)](https://github.com/mvsouza/cca-f-prep)
+[![Question Bank](https://img.shields.io/badge/Question%20Bank-701%20Scenario%20Drills-blue?style=for-the-badge&logo=anthropic)](https://github.com/mvsouza/cca-f-prep)
+[![Benchmark](https://img.shields.io/badge/Passing%20Benchmark-720%20%2F%201000-success?style=for-the-badge)](https://github.com/mvsouza/cca-f-prep)
+[![Architecture](https://img.shields.io/badge/Architecture-100%25%20Client--Side-purple?style=for-the-badge)](https://github.com/mvsouza/cca-f-prep)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Author](https://img.shields.io/badge/Author-Matheus%20Souza-orange?style=for-the-badge&logo=safari)](https://mvsouza.com)
+
+**An interactive, browser-based exam simulator and spaced-repetition mastery engine designed specifically for the official Anthropic Claude Certified Architect – Foundations (CCA-F / CCAR-F) certification.**
+
+[🚀 Try Live Simulator](https://mvsouza.github.io/cca-f-prep/) • [📊 14-Day Study Plan & Pitch Deck](PITCH_DECK.md) • [🎁 Partner Voucher Guide](#6-🎟️-sponsored-exam-vouchers--pitch-deck)
+
+</div>
 
 ---
 
@@ -91,29 +105,44 @@ The app comes loaded with a comprehensive built-in bank of authentic scenario qu
 * **Thumb-Friendly Pagers:** Bottom navigation buttons stack into responsive full-width touch targets on small viewports.
 * **Swipe-Friendly Tabs:** Header navigation scrolls horizontally without breaking header layout on viewports as small as 320px.
 
-### 6. 🎟️ $0 Exam Voucher & Pitch Deck
-* **Free Certification Voucher Guide:** Built-in tab and roadmap detailing how to get a 100% free Pearson VUE exam voucher ($125 value) through Claude Partner Network (CPN) members such as RemoteHub.
+### 6. 🎟️ Sponsored Exam Vouchers & Pitch Deck
+* **Partner Sponsorship Guide:** Step-by-step roadmap explaining how candidate engineers leverage the **Claude Partner Network (CPN)** to receive corporate partner domain credentials, access the Anthropic Partner Academy, and claim up to 100% exam fee waivers on Pearson VUE ($125 value). *(Note: This project is an independent study tool and does not issue vouchers directly).*
 * **14-Day Study Plan:** Structured schedule to reach 720+ scaled score readiness in 14 days (~1.5 hours/day).
-* Full documentation available in [PITCH_DECK.md](file:///Users/matheussouza/Workspace/ai-eng-repos/ai-engineer/cca-f-prep/PITCH_DECK.md).
+* Full documentation available in [PITCH_DECK.md](PITCH_DECK.md).
 
 ---
 
 ## 🌐 Deploy to GitHub Pages
 
-1. Push this repository to GitHub:
+1. Create a new repository named `cca-f-prep` on [GitHub](https://github.com/new).
+2. Link your local repo and push:
    ```bash
-   git remote add origin https://github.com/<your-username>/<your-repo>.git
+   cd cca-f-prep
+   git remote add origin https://github.com/mvsouza/cca-f-prep.git
    git push -u origin main
    ```
-2. In your GitHub repository settings:
-   * Go to **Settings** → **Pages**.
+3. In your GitHub repository settings:
+   * Navigate to **Settings** → **Pages**.
    * Under **Build and deployment** → **Source**, select **GitHub Actions**.
-3. The included workflow (`.github/workflows/deploy.yml`) will automatically deploy the static application to `https://<your-username>.github.io/<your-repo>/`.
+4. The workflow in `.github/workflows/deploy.yml` will automatically publish the application live to:
+   ```
+   https://mvsouza.github.io/cca-f-prep/
+   ```
 
 ### 📊 Google Analytics 4 (GA4) Configuration
-To activate Google Analytics tracking on your deployment, either:
+To monitor your traffic:
 * Replace `'G-XXXXXXXXXX'` in `index.html` with your GA4 Measurement ID, or
 * Open your browser console on the deployed page and run:
   ```javascript
   localStorage.setItem('ccaf_ga_id', 'G-YOUR_MEASUREMENT_ID');
   ```
+
+---
+
+## 👨‍💻 Author & Attribution
+
+Created by **[Matheus Souza](https://mvsouza.com)** ([@mvsouza](https://github.com/mvsouza)) to democratize agentic AI engineering and empower developers preparing for Anthropic's flagship architecture credential.
+
+* **Personal Website:** [mvsouza.com](https://mvsouza.com)
+* **GitHub:** [@mvsouza](https://github.com/mvsouza)
+* **License:** [MIT](LICENSE)

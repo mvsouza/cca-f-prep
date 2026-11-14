@@ -66,20 +66,19 @@ Passive reading of API documentation leaves candidates blind to exam traps. The 
 
 ---
 
-## 🎁 Slide 4: The Free Voucher Secret ($125 Saved via Partner Network)
+## 🎁 Slide 4: Sponsored Exam Vouchers (How Candidates Save $125 via Partner Channels)
 
-> [!TIP]
-> **You do NOT need to pay the $125 Pearson VUE exam fee.** Anthropic waives 100% of the cost for members of the **Claude Partner Network (CPN)**.
+> [!IMPORTANT]
+> **Transparency Notice:** This study tool is an independent, 100% free community project. **We do not issue, sell, or distribute exam vouchers directly.** This guide explains the official partner sponsorship mechanism established by Anthropic.
 
-### How to Get Your Free Voucher:
-1. **The Partner Network Rule:** Anthropic grants free certification access to organizations registered in the Claude Partner Network via the **Anthropic Partner Academy**.
-2. **Affiliation Examples:** 
-   * **RemoteHub / AI Agencies / Consulting Partners:** Organizations like RemoteHub, technology consultancies, and AI dev shops maintain active partner standing.
-   * **Requesting a Corporate Alias:** You can partner up or request an organizational email alias (e.g. `@partner-org.com`) tied to a participating partner.
-3. **Activating the Voucher:**
-   * Sign into the **Anthropic Partner Academy** using your partner email.
-   * Complete the foundational academy tracks.
-   * Receive your Pearson VUE $125 100% discount voucher code automatically!
+### How Partner Exam Sponsorship Works:
+1. **The Claude Partner Network (CPN):** Anthropic offers enterprise certification benefits to organizations registered in the Claude Partner Network. Partner organizations gain access to the **Anthropic Partner Academy**.
+2. **Corporate & Remote Network Affiliations:** 
+   * Many consulting agencies, system integrators, and remote talent networks (e.g. cloud consulting firms, remote engineering hubs) are enrolled CPN members.
+   * If you work with, contract for, or contribute through a partner firm, you can request an organizational email alias (`@partner-domain.com`) from your administrator.
+3. **Activating Subsidized / Free Registration:**
+   * Sign into the **Anthropic Partner Academy** using your verified corporate partner email.
+   * Eligible partner tiers receive subsidized registration (50% discounts or 100% fee waivers for premier tiers), dropping the Pearson VUE exam fee at checkout from **$125 to $0.00**.
 
 ---
 
