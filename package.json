@@ -1,0 +1,19 @@
+{
+  "name": "claude-cca-f-exam-prep",
+  "version": "1.0.0",
+  "description": "Client-side static exam simulator and spaced repetition mastery engine for Anthropic CCA-F certification.",
+  "scripts": {
+    "start": "npx serve .",
+    "serve": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "anthropic",
+    "claude",
+    "cca-f",
+    "ccar-f",
+    "exam-prep",
+    "spaced-repetition"
+  ],
+  "author": "",
+  "license": "MIT"
+}
