@@ -28,10 +28,23 @@ document.addEventListener("DOMContentLoaded", () => {
     free: document.getElementById("view-free"),
     mock: document.getElementById("view-mock"),
     review: document.getElementById("view-review"),
-    bank: document.getElementById("view-bank")
+    bank: document.getElementById("view-bank"),
+    voucher: document.getElementById("view-voucher"),
+    pitch: document.getElementById("view-pitch")
   };
 
   const headerClearanceText = document.getElementById("header-clearance-text");
+
+  // Google Analytics Event Helper
+  function trackEvent(eventName, params = {}) {
+    if (typeof window.gtag === 'function' && window.GA_MEASUREMENT_ID && window.GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX') {
+      try {
+        window.gtag('event', eventName, params);
+      } catch (e) {
+        console.warn('GA event error:', e);
+      }
+    }
+  }
 
   // Navigation Logic
   function switchView(targetView) {
@@ -45,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     navButtons.forEach(btn => {
       btn.classList.toggle("active", btn.dataset.view === targetView);
     });
+
+    trackEvent('page_view', { page_view: targetView });
 
     if (targetView === 'dashboard') {
       renderDashboard();
@@ -269,6 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isCorrect = selectedOptionIndex === activeQuestion.correct;
     const updatedProgress = storage.recordAttempt(activeQuestion.id, selectedOptionIndex, isCorrect, 'free');
+    trackEvent('free_answer_submitted', { domain: activeQuestion.domain, is_correct: isCorrect });
 
     // UI feedback on options
     const optionCards = document.querySelectorAll("#free-options-list .option-item");
@@ -342,6 +358,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const mockPrevBtn = document.getElementById("btn-mock-prev");
   const mockNextBtn = document.getElementById("btn-mock-next");
   const mockSubmitBtn = document.getElementById("btn-mock-submit");
+  const btnTogglePalette = document.getElementById("btn-toggle-palette");
+
+  if (btnTogglePalette && mockPalette) {
+    btnTogglePalette.addEventListener("click", () => {
+      const isHidden = mockPalette.style.display === "none";
+      mockPalette.style.display = isHidden ? "grid" : "none";
+      btnTogglePalette.textContent = isHidden ? "Hide Map" : "Show Map";
+    });
+  }
 
   document.getElementById("btn-start-full-mock").addEventListener("click", () => startMockExam(60, 120));
   document.getElementById("btn-start-mini-mock").addEventListener("click", () => startMockExam(15, 30));
@@ -354,6 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     mockLauncher.style.display = "none";
     mockExamSession.style.display = "block";
+
+    if (mockPalette) {
+      mockPalette.style.display = "grid";
+      if (btnTogglePalette) btnTogglePalette.textContent = "Hide Map";
+    }
+
+    trackEvent('start_mock_exam', { question_count: questionCount, time_limit: timeLimitMinutes });
 
     if (mockTimerInterval) clearInterval(mockTimerInterval);
     mockTimerInterval = setInterval(updateMockTimer, 1000);
@@ -474,6 +506,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const mockRecord = mockEngine.gradeMockExam(currentMock, mockSecondsElapsed);
     storage.recordMockExam(mockRecord);
 
+    trackEvent('submit_mock_exam', {
+      scaled_score: mockRecord.scaledScore,
+      pass: mockRecord.pass,
+      percentage: mockRecord.percentage,
+      time_spent: mockSecondsElapsed
+    });
+
     currentMock = null;
     mockExamSession.style.display = "none";
     mockLauncher.style.display = "block";
@@ -493,6 +532,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const reviewStatsSub = document.getElementById("review-stats-sub");
     const domainReviewContainer = document.getElementById("review-domain-breakdown");
     const questionsReviewContainer = document.getElementById("review-questions-list");
+
+    // Return to dashboard button
+    const backDashBtn = document.getElementById("btn-review-back-dash");
+    if (backDashBtn) {
+      backDashBtn.onclick = () => switchView('dashboard');
+    }
+
+    // Share & Copy buttons
+    const btnShareScore = document.getElementById("btn-share-score");
+    const btnCopyScore = document.getElementById("btn-copy-score");
+
+    if (btnShareScore) {
+      btnShareScore.onclick = () => {
+        const statusEmoji = mockRecord.pass ? "🎉 PASSED" : "📚 STUDYING";
+        const shareText = `I scored ${mockRecord.scaledScore}/1000 (${statusEmoji}) on the Claude Certified Architect - Foundations (CCA-F) Mock Simulator!\n\n700+ questions, free & runs client-side in the browser.\n\nPractice here: https://matheussouza.github.io/ai-engineer/ #Claude #Anthropic #AIEngineer`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+        window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+        trackEvent('share_score_twitter', { scaled_score: mockRecord.scaledScore, pass: mockRecord.pass });
+      };
+    }
+
+    if (btnCopyScore) {
+      btnCopyScore.onclick = () => {
+        const copyText = `🎯 Claude Certified Architect - Foundations (CCA-F) Mock Result:
+Result: ${mockRecord.pass ? '✅ OFFICIAL PASS' : '📚 IN TRAINING'}
+Scaled Score: ${mockRecord.scaledScore}/1000 (Benchmark: 720)
+Raw Accuracy: ${mockRecord.correctCount}/${mockRecord.totalQuestions} (${mockRecord.percentage}%)
+Time Spent: ${Math.round(mockRecord.timeSpentSeconds / 60)} minutes
+
+Practice with 700+ questions free:
+https://matheussouza.github.io/ai-engineer/`;
+
+        navigator.clipboard.writeText(copyText).then(() => {
+          const original = btnCopyScore.textContent;
+          btnCopyScore.textContent = "✓ Copied to Clipboard!";
+          setTimeout(() => {
+            btnCopyScore.textContent = original;
+          }, 2500);
+          trackEvent('copy_score_clipboard', { scaled_score: mockRecord.scaledScore });
+        }).catch(() => {
+          alert("Score summary:\n\n" + copyText);
+        });
+      };
+    }
 
     // Banner Styling
     scorecardBanner.className = "scorecard-banner " + (mockRecord.pass ? "pass" : "fail");

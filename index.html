@@ -2,8 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Claude CCA-F Architect Exam Simulator & Mastery Engine</title>
+
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="Free open-source Anthropic Claude Certified Architect (CCA-F / CCAR-F) exam simulator. 700+ scenario questions, spaced repetition mastery, official blueprint weighting, and free exam voucher guide." />
+  <meta name="keywords" content="Claude Certified Architect, CCA-F, CCAR-F, Anthropic Certification, Claude Exam Practice, MCP, Claude Code, AI Engineer Exam, Free CCA-F Voucher" />
+  <meta property="og:title" content="Anthropic Claude CCA-F Architect Exam Simulator & Mastery Engine" />
+  <meta property="og:description" content="Prepare for the Claude Certified Architect exam with 700+ scenario questions, spaced-repetition mastery, and official blueprint weighting." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script>
+    window.GA_MEASUREMENT_ID = window.GA_MEASUREMENT_ID || localStorage.getItem('ccaf_ga_id') || 'G-XXXXXXXXXX';
+    if (window.GA_MEASUREMENT_ID && window.GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX') {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_MEASUREMENT_ID}`;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', window.GA_MEASUREMENT_ID);
+      window.gtag = gtag;
+    } else {
+      window.gtag = function() {
+        console.log('[GA4 Event]', ...arguments);
+      };
+    }
+  </script>
+
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -21,13 +51,19 @@
 
       <nav class="nav-tabs">
         <button class="nav-btn active" data-view="dashboard">
-          <span>📊</span> Dashboard & Metrics
+          <span>📊</span> Dashboard
         </button>
         <button class="nav-btn" data-view="free">
-          <span>🎯</span> Free Mode (Adaptive)
+          <span>🎯</span> Free Practice
         </button>
         <button class="nav-btn" data-view="mock">
-          <span>⏱️</span> Mock Exam (Timed)
+          <span>⏱️</span> Mock Exam
+        </button>
+        <button class="nav-btn" data-view="voucher">
+          <span>🎁</span> Free Voucher Hack
+        </button>
+        <button class="nav-btn" data-view="pitch">
+          <span>🚀</span> 14-Day Roadmap
         </button>
         <button class="nav-btn" data-view="bank">
           <span>📚</span> Question Bank
@@ -35,6 +71,10 @@
       </nav>
 
       <div class="header-status">
+        <a href="https://github.com/matheussouza/ai-engineer" target="_blank" rel="noopener noreferrer" class="btn-star" id="btn-github-star">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          <span>Star on GitHub</span>
+        </a>
         <div class="clearance-pill">
           <span>🎯 Target 100%:</span>
           <strong id="header-clearance-text">0% Cleared</strong>
@@ -215,7 +255,7 @@
             <!-- Injected via JavaScript -->
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <div class="free-actions-bar" style="display: flex; justify-content: flex-end; gap: 0.75rem;">
             <button class="btn-primary" id="btn-free-submit" disabled>Submit Answer</button>
             <button class="btn-primary" id="btn-free-next" style="display: none;">Next Question →</button>
           </div>
@@ -238,21 +278,21 @@
     <section id="view-mock" class="view-section">
       
       <!-- Launcher Screen -->
-      <div id="mock-launcher-card" class="card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 2.5rem;">
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Official CCA-F Mock Simulator</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+      <div id="mock-launcher-card" class="card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 2rem 1.25rem;">
+        <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Official CCA-F Mock Simulator</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.75rem; font-size: 0.95rem;">
           Simulate official test conditions. Questions are sampled proportionally across all 5 domains. No explanations or answers will be revealed until you submit.
         </p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
-            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Full Simulation</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-bottom: 1.75rem;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.15rem;">Full Simulation</h3>
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">60 Questions • 120 Minutes<br/>Official Scaled Benchmark (720/1000)</p>
             <button class="btn-primary" id="btn-start-full-mock" style="width: 100%;">Start 60-Q Full Mock</button>
           </div>
 
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
-            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Sprint Checkpoint</h3>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.15rem;">Sprint Checkpoint</h3>
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">15 Questions • 30 Minutes<br/>Quick domain diagnostic</p>
             <button class="btn-secondary" id="btn-start-mini-mock" style="width: 100%;">Start 15-Q Sprint Mock</button>
           </div>
@@ -266,13 +306,13 @@
       <!-- Active Mock Exam Session -->
       <div id="mock-active-card" style="display: none; max-width: 900px; margin: 0 auto;">
         
-        <!-- Sticky Mock Top Bar -->
+        <!-- Sticky Mock Top Bar HUD -->
         <div class="mock-bar">
           <div>
-            <span style="font-size: 0.85rem; color: var(--text-secondary);">Question</span>
-            <strong id="mock-q-current-num" style="font-size: 1.15rem; margin-left: 0.3rem;">1</strong>
-            <span style="font-size: 0.85rem; color: var(--text-secondary);">of</span>
-            <strong id="mock-q-total-num" style="font-size: 1.15rem;">60</strong>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Q</span>
+            <strong id="mock-q-current-num" style="font-size: 1.05rem; margin-left: 0.15rem;">1</strong>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">/</span>
+            <strong id="mock-q-total-num" style="font-size: 1.05rem;">60</strong>
           </div>
 
           <div class="timer-box">
@@ -280,10 +320,16 @@
             <span id="mock-timer">120:00</span>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
             <input type="checkbox" id="mock-flag-checkbox" style="cursor: pointer;" />
-            <label for="mock-flag-checkbox" style="font-size: 0.85rem; cursor: pointer;">Flag for Review</label>
+            <label for="mock-flag-checkbox" style="font-size: 0.8rem; cursor: pointer;">Flag</label>
           </div>
+        </div>
+
+        <!-- Question Palette Header with Toggle -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0 0.35rem 0;">
+          <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Question Navigator (1-60):</span>
+          <button id="btn-toggle-palette" class="btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.72rem; border-radius: 4px;">Hide Map</button>
         </div>
 
         <!-- Question Palette -->
@@ -301,12 +347,13 @@
             <!-- Injected via JavaScript -->
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
-            <button class="btn-secondary" id="btn-mock-prev">← Previous</button>
-            <div style="display: flex; gap: 0.75rem;">
+          <!-- Responsive Mock Nav Controls -->
+          <div class="mock-nav-actions" style="margin-top: 1.5rem;">
+            <div class="mock-nav-row">
+              <button class="btn-secondary" id="btn-mock-prev">← Previous</button>
               <button class="btn-secondary" id="btn-mock-next">Next →</button>
-              <button class="btn-primary" id="btn-mock-submit" style="background: var(--claude-coral);">Finish & Submit Exam</button>
             </div>
+            <button class="btn-primary" id="btn-mock-submit" style="background: var(--claude-coral);">Finish & Submit Exam</button>
           </div>
         </div>
 
@@ -323,7 +370,26 @@
           <div class="score-badge-large" id="review-pass-badge">OFFICIAL PASS</div>
           <div class="score-number" id="review-scaled-score">780 / 1000</div>
           <div class="score-benchmark" id="review-stats-sub">Raw Accuracy: 47/60 (78%) • Benchmark: 720/1000</div>
-          <button class="btn-primary" id="btn-review-back-dash" onclick="document.querySelector('[data-view=dashboard]').click()">Back to Dashboard</button>
+          <button class="btn-primary" id="btn-review-back-dash">Back to Dashboard</button>
+        </div>
+
+        <!-- Share & Star Box -->
+        <div class="share-score-box" id="review-share-box">
+          <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.35rem;">🎉 Milestone Completed!</h3>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 600px; margin: 0 auto;">
+            Preparing for the CCA-F with this free simulator? Support the project with a star on GitHub and share your score to inspire other AI architects!
+          </p>
+          <div class="share-buttons-row">
+            <button class="btn-share" id="btn-share-score">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 24.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>Share on X / Twitter</span>
+            </button>
+            <button class="btn-copy" id="btn-copy-score">📋 Copy Score Post</button>
+            <a href="https://github.com/matheussouza/ai-engineer" target="_blank" rel="noopener noreferrer" class="btn-star" style="padding: 0.55rem 1.1rem;">
+              <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+              <span>⭐ Star on GitHub</span>
+            </a>
+          </div>
         </div>
 
         <!-- Domain Diagnostic Breakdown -->
@@ -357,7 +423,7 @@
           <p class="section-subtitle" id="bank-total-count">0 Questions in Local Bank</p>
         </div>
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <button class="btn-primary" id="btn-open-import-modal">📥 Import Questions JSON</button>
+          <button class="btn-primary" id="btn-open-import-modal">📥 Import JSON</button>
           <button class="btn-secondary" id="btn-export-data">💾 Export Backup</button>
           <button class="btn-danger" id="btn-reset-data">Reset Progress</button>
         </div>
@@ -382,6 +448,127 @@
       </div>
     </section>
 
+    <!-- VIEW 6: FREE VOUCHER GUIDE -->
+    <section id="view-voucher" class="view-section">
+      <div class="voucher-hero">
+        <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem; color: #fff;">🎁 How to Take the $125 CCA-F Exam 100% Free</h2>
+        <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 800px; margin-bottom: 1rem;">
+          The Pearson VUE exam fee is normally <strong>$125 USD</strong>. However, through the <strong>Claude Partner Network (CPN)</strong>, Anthropic provides <strong>100% free exam vouchers</strong>. Here is the verified roadmap to getting your certification at zero cost.
+        </p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Step-by-Step Free Voucher Blueprint</h3>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Partner Network Affiliation (e.g. RemoteHub)</h4>
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              Anthropic verifies voucher eligibility using an approved corporate or partner email domain. Organizations that are members of the <strong>Claude Partner Network (CPN)</strong> (such as <strong>RemoteHub</strong>, AI consulting agencies, and enterprise dev partners) can register candidates through their partner standing.
+            </p>
+            <div class="partner-box">
+              <strong>💡 Real Candidate Strategy:</strong>
+              <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.35rem;">
+                If you collaborate or work with an authorized partner like RemoteHub, reach out to their team and request a partner email alias or academy invitation. Once assigned, this email unlocks full partner tier access.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Sign into the Anthropic Partner Academy</h4>
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              Access the official <strong>Anthropic Partner Academy</strong> using your partner organizational email. The academy grants access to foundational modules, architecture labs, and official certification preparation tracks.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Claim Your 100% Pearson VUE Voucher Code</h4>
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              Upon completing the verification in the Partner Academy, navigate to the certification tab to claim your unique Pearson VUE voucher code.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Book Your Exam on Pearson VUE for $0</h4>
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              Go to the Pearson VUE Anthropic portal, select <strong>Claude Certified Architect – Foundations (CCAR-F)</strong>, pick an online proctored or in-person test center slot, apply your voucher at checkout, and the balance drops from <strong>$125.00 to $0.00</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 7: 14-DAY ROADMAP & PITCH DECK -->
+    <section id="view-pitch" class="view-section">
+      <div class="deck-container">
+        
+        <div class="deck-slide">
+          <span class="slide-tag">Certification Pitch Deck</span>
+          <h2 style="font-size: 1.85rem; margin-bottom: 0.5rem; color: #fff;">Crack Anthropic CCA-F in 14 Days</h2>
+          <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.6;">
+            A battle-tested active recall study system designed to take you from foundational understanding to certified Claude Architect in under 20 hours.
+          </p>
+
+          <div class="timeline-grid">
+            <div class="timeline-card">
+              <strong>⚡ Experienced AI Engineer</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">10 – 14 hours total (1.5 hrs/day)<br/>Timeline: <strong>7 – 10 Days</strong></p>
+            </div>
+            <div class="timeline-card">
+              <strong>🏗️ Software Architect</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">18 – 24 hours total (1.5 hrs/day)<br/>Timeline: <strong>14 – 16 Days</strong></p>
+            </div>
+            <div class="timeline-card">
+              <strong>🌱 Career Transitioner</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">30 – 40 hours total (1.5 hrs/day)<br/>Timeline: <strong>21 – 28 Days</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="deck-slide">
+          <span class="slide-tag">Sprint Schedule</span>
+          <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">The 14-Day Blueprint Breakdown</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #60a5fa; margin-bottom: 0.4rem;">Days 1–3: Agentic Orchestration (27%)</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">Subagent isolation, loop stop reasons, circuit breaker guards, multi-agent pipelines.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #60a5fa; margin-bottom: 0.4rem;">Days 4–6: Claude Code & Workflows (20%)</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">CLAUDE.md hierarchy, skills in .claude/skills, plan mode, headless CI/CD execution.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #60a5fa; margin-bottom: 0.4rem;">Days 7–8: Prompting & Schemas (20%)</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">Structured JSON outputs with tool_choice, XML tag boundaries, extended thinking tokens.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #60a5fa; margin-bottom: 0.4rem;">Days 9–10: MCP & Tools (18%)</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">Resources vs Tools vs Prompts, stdio vs SSE transports, is_error contracts.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #60a5fa; margin-bottom: 0.4rem;">Days 11–12: Caching & Reliability (15%)</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">Prompt caching prefix rules, 4 breakpoints, Batch API 50% discount, rate limiting.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <h4 style="color: #34d399; margin-bottom: 0.4rem;">Days 13–14: Full Timed Mocks</h4>
+              <p style="font-size: 0.825rem; color: var(--text-secondary);">Take 2 full 60-question mocks (aim for 800+ scaled score) and blitz failed queue to 100% cleared!</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- Import Modal -->
@@ -389,7 +576,7 @@
     <div class="modal-card">
       <h3 style="margin-bottom: 0.5rem;">Import Question Batch (JSON)</h3>
       <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
-        Paste a valid JSON array of questions matching the CCA-F schema to expand your question bank up to 400 questions.
+        Paste a valid JSON array of questions matching the CCA-F schema to expand your question bank.
       </p>
       <textarea class="json-input" id="json-import-textarea" placeholder='[
   {
