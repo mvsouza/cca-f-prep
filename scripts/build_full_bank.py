@@ -163,15 +163,15 @@ def parse_dojo_questions():
     # Pattern for question definitions:
     # q001:{q:'...', o:['...','...','...','...'], e:'...', w:{...}}
     q_def_pattern = re.compile(
-        r"(q\d+):\s*\{\s*q:\s*(['\"])(.*?)\2,\s*o:\s*\[(.*?)\]\s*,\s*e:\s*(['\"])(.*?)\5",
+        r"(q\d+):\s*\{\s*q:\s*'(.*?)',\s*o:\s*\[(.*?)\],\s*e:\s*'(.*?)',\s*w:",
         re.DOTALL
     )
 
     for m in q_def_pattern.finditer(en_content):
         qid = m.group(1)
-        stem = m.group(3).strip().replace("\\'", "'").replace('\\"', '"')
-        raw_options = m.group(4)
-        explanation = m.group(6).strip().replace("\\'", "'").replace('\\"', '"')
+        stem = m.group(2).strip().replace("\\'", "'").replace('\\"', '"')
+        raw_options = m.group(3)
+        explanation = m.group(4).strip().replace("\\'", "'").replace('\\"', '"')
 
         # Split options
         opt_matches = re.findall(r"(['\"])(.*?)\1", raw_options, re.DOTALL)
