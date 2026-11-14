@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#grad)" />
+  <!-- Architectural Hexagon & Star -->
+  <polygon points="32,10 52,22 52,44 32,54 12,44 12,22" fill="#0f172a" stroke="#fcd34d" stroke-width="2.5" />
+  <!-- Claude Star / Spark -->
+  <path d="M32 20 L35 28 L43 31 L35 34 L32 42 L29 34 L21 31 L29 28 Z" fill="#f59e0b" />
+</svg>

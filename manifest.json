@@ -1,0 +1,26 @@
+{
+  "name": "Claude CCA-F Architect Exam Simulator",
+  "short_name": "Claude CCA-F",
+  "description": "Free open-source Anthropic Claude Certified Architect (CCA-F) exam simulator with 700+ questions.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#d97706",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

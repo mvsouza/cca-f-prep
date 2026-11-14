@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mvsouza.github.io/cca-f-prep/sitemap.xml

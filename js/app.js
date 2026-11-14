@@ -46,8 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const viewTitles = {
+    dashboard: "Claude CCA-F Architect Exam Simulator | 700+ Questions & 100% Free Practice",
+    free: "Free Adaptive Practice | Claude CCA-F Architect Prep",
+    mock: "Timed 60-Q Mock Exam (120 Mins) | Claude CCA-F Simulator",
+    review: "Mock Exam Diagnostic & Scorecard | Claude CCA-F Simulator",
+    bank: "Master Question Bank (701 Questions) | Claude CCA-F Prep",
+    voucher: "$0 Partner Exam Voucher Guide | Claude CCA-F Prep",
+    pitch: "14-Day Study Plan & Pitch Deck | Claude CCA-F Prep"
+  };
+
   // Navigation Logic
-  function switchView(targetView) {
+  function switchView(targetView, updateHash = true) {
     currentView = targetView;
     Object.keys(views).forEach(key => {
       if (views[key]) {
@@ -59,6 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.toggle("active", btn.dataset.view === targetView);
     });
 
+    if (viewTitles[targetView]) {
+      document.title = viewTitles[targetView];
+    }
+
+    if (updateHash && window.location.hash !== '#' + targetView) {
+      window.history.replaceState(null, '', '#' + targetView);
+    }
+
     trackEvent('page_view', { page_view: targetView });
 
     if (targetView === 'dashboard') {
@@ -69,6 +87,14 @@ document.addEventListener("DOMContentLoaded", () => {
       renderQuestionBankManager();
     }
   }
+
+  // Handle URL Hash Changes (Deep-linking)
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash.replace('#', '');
+    if (views[hash] && hash !== currentView) {
+      switchView(hash, false);
+    }
+  });
 
   navButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -726,6 +752,11 @@ https://mvsouza.github.io/cca-f-prep/`;
     }
   };
 
-  // Initial Load
-  renderDashboard();
+  // Initial Load (support deep-linking via URL hash)
+  const initialHash = window.location.hash.replace('#', '');
+  if (views[initialHash]) {
+    switchView(initialHash, false);
+  } else {
+    renderDashboard();
+  }
 });
