@@ -85,3 +85,35 @@ The app comes loaded with a comprehensive built-in bank of authentic scenario qu
 * All stats, attempt history, streaks, and mock exam results are saved automatically in your browser's `localStorage`.
 * **Export Backup:** Download a full JSON snapshot of your learning progress anytime.
 * **Reset Data:** Reset learning metrics if you want a clean slate.
+
+### 5. 📱 Smartphone & Tablet Responsive UI
+* **Contained Question Map:** On mobile, the 60-question palette is neatly contained in a compact, scrollable tray with a quick **"Hide/Show Map"** toggle to prevent screen clutter.
+* **Thumb-Friendly Pagers:** Bottom navigation buttons stack into responsive full-width touch targets on small viewports.
+* **Swipe-Friendly Tabs:** Header navigation scrolls horizontally without breaking header layout on viewports as small as 320px.
+
+### 6. 🎟️ $0 Exam Voucher & Pitch Deck
+* **Free Certification Voucher Guide:** Built-in tab and roadmap detailing how to get a 100% free Pearson VUE exam voucher ($125 value) through Claude Partner Network (CPN) members such as RemoteHub.
+* **14-Day Study Plan:** Structured schedule to reach 720+ scaled score readiness in 14 days (~1.5 hours/day).
+* Full documentation available in [PITCH_DECK.md](file:///Users/matheussouza/Workspace/ai-eng-repos/ai-engineer/cca-f-prep/PITCH_DECK.md).
+
+---
+
+## 🌐 Deploy to GitHub Pages
+
+1. Push this repository to GitHub:
+   ```bash
+   git remote add origin https://github.com/<your-username>/<your-repo>.git
+   git push -u origin main
+   ```
+2. In your GitHub repository settings:
+   * Go to **Settings** → **Pages**.
+   * Under **Build and deployment** → **Source**, select **GitHub Actions**.
+3. The included workflow (`.github/workflows/deploy.yml`) will automatically deploy the static application to `https://<your-username>.github.io/<your-repo>/`.
+
+### 📊 Google Analytics 4 (GA4) Configuration
+To activate Google Analytics tracking on your deployment, either:
+* Replace `'G-XXXXXXXXXX'` in `index.html` with your GA4 Measurement ID, or
+* Open your browser console on the deployed page and run:
+  ```javascript
+  localStorage.setItem('ccaf_ga_id', 'G-YOUR_MEASUREMENT_ID');
+  ```
