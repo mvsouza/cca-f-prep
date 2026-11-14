@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cca-batch-001",
+    "domain": "Tool Design & Model Context Protocol (MCP) Integration",
+    "topic": "MCP Resource Subscriptions",
+    "question": "A developer wants an MCP client to receive immediate updates whenever a log file monitored by an MCP server changes on disk. Which MCP capability facilitates this real-time notification?",
+    "options": [
+      "Polling `tools/call` every 500 milliseconds in a tight while loop.",
+      "Resource Subscriptions (`resources/subscribe`): the client subscribes to the resource URI, and the server emits `notifications/resources/updated` whenever the resource changes.",
+      "Restarting the MCP server on every file write.",
+      "MCP does not support real-time resource notifications."
+    ],
+    "correct": 1,
+    "explanation": "MCP provides a native publish-subscribe mechanism for resources. Clients send a `resources/subscribe` request for a specific resource URI, and the server sends `notifications/resources/updated` whenever changes occur, avoiding wasteful polling.",
+    "referenceTitle": "Model Context Protocol - Resource Subscriptions",
+    "referenceUrl": "https://modelcontextprotocol.io/docs/concepts/resources#subscriptions"
+  },
+  {
+    "id": "cca-batch-002",
+    "domain": "Agentic Architecture & Orchestration",
+    "topic": "Dynamic Tool Selection & Pruning",
+    "question": "An enterprise agent platform has access to 250 different corporate API tools. When all 250 tool definitions are passed to Claude simultaneously in every request, accuracy degrades and prompt overhead exceeds 60,000 tokens. What is the recommended architectural solution?",
+    "options": [
+      "Use Dynamic Tool Selection (Tool Retrieval): classify or retrieve only the 5–10 most relevant tools for the current user turn via vector semantic search or a routing agent, dynamically injecting only those tool schemas into the request.",
+      "Increase `max_tokens` to 100,000 and pass all 250 tools unchanged.",
+      "Concatenate all 250 tools into a single mega-tool with 200 parameters.",
+      "Remove tool descriptions so the prompt is shorter."
+    ],
+    "correct": 0,
+    "explanation": "Overloading models with hundreds of tool schemas leads to prompt bloat and decision confusion. Tool Retrieval uses a fast semantic search or lightweight router to dynamically inject only the relevant tools needed for each step.",
+    "referenceTitle": "Anthropic Docs - Scaling Tool Use",
+    "referenceUrl": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
+  },
+  {
+    "id": "cca-batch-003",
+    "domain": "Claude Code Configuration & Workflows",
+    "topic": "Memory & Global vs Local Instructions",
+    "question": "In a monorepo containing multiple independent projects (e.g., `frontend/` and `backend/`), how does Claude Code determine which instruction files apply when working in the `backend/` directory?",
+    "options": [
+      "It only ever reads a single file at `/etc/claude.conf`.",
+      "It reads the root `CLAUDE.md` and hierarchically merges directory-specific `CLAUDE.md` files from subdirectories, allowing directory-specific rules to complement or override parent configurations.",
+      "Subdirectories cannot have their own `CLAUDE.md` files.",
+      "It chooses one at random on startup."
+    ],
+    "correct": 1,
+    "explanation": "Claude Code supports hierarchical configuration: it inherits global/root instructions and layers directory-local `CLAUDE.md` guidelines when navigating within specific subfolders.",
+    "referenceTitle": "Claude Code Documentation - Project Architecture",
+    "referenceUrl": "https://docs.anthropic.com/en/docs/claude-code/overview"
+  },
+  {
+    "id": "cca-batch-004",
+    "domain": "Context Window & Performance Optimization",
+    "topic": "Streaming API & TTFT",
+    "question": "In an interactive customer-facing web chatbot, which Anthropic API mode provides the lowest perceived latency (fastest Time-to-First-Token)?",
+    "options": [
+      "Non-streaming JSON response format.",
+      "Streaming with Server-Sent Events (`stream: true`), yielding incremental token deltas directly to the user interface as they are generated.",
+      "Message Batches API.",
+      "Polling the status endpoint every 2 seconds."
+    ],
+    "correct": 1,
+    "explanation": "Setting `stream: true` utilizes Server-Sent Events to deliver content blocks and token deltas to the client immediately upon generation, reducing perceived latency to a fraction of a second regardless of final output length.",
+    "referenceTitle": "Anthropic Docs - Streaming Responses",
+    "referenceUrl": "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+  },
+  {
+    "id": "cca-batch-005",
+    "domain": "Security, Guardrails & Compliance",
+    "topic": "Deterministic Tool Parameter Validation",
+    "question": "Even when Claude produces parameters matching a tool's JSON Schema, what validation layer should the backend orchestrator execute before triggering database mutations?",
+    "options": [
+      "No validation is necessary if Claude has temperature 0.",
+      "Deterministic server-side validation: enforce authorization checks, input sanitization, allowed value boundaries, and idempotency keys before executing state modifications.",
+      "Check that the user is logged into Discord.",
+      "Ask Claude a second time: 'Are you sure this parameter is safe?'"
+    ],
+    "correct": 1,
+    "explanation": "Never trust LLM outputs blindly for privileged operations. The backend execution layer must apply standard deterministic software engineering safeguards: authentication, RBAC authorization, range checks, input sanitization, and idempotency.",
+    "referenceTitle": "Anthropic Research - Building Safe and Reliable Systems",
+    "referenceUrl": "https://www.anthropic.com/research/building-effective-agents"
+  }
+]
