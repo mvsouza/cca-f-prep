@@ -29,14 +29,14 @@ To pass the CCA-F and master the entire curriculum through practice questions al
 
 * **Why 360–400?**  
   The official exam has **60 scenario-based questions**. A pool of 360 questions provides **6 completely non-repeating, unique 60-question mock exams**.
-* **Domain Distribution Target:**
-  1. **Agentic Architecture & Orchestration:** ~100–120 questions (Agent SDK, subagents, loops, stop reasons)
-  2. **Tool Design & Model Context Protocol (MCP) Integration:** ~90–110 questions (MCP servers, resources, tools, transports)
-  3. **Claude Code Configuration & Workflows:** ~70–90 questions (`CLAUDE.md`, skills, hooks, headless CI/CD)
-  4. **Context Window & Performance Optimization:** ~60–80 questions (Prompt caching, Batch API, structured outputs)
-  5. **Security, Guardrails & Compliance:** ~50–60 questions (Prompt injection, HITL gates, Constitutional AI)
+* **Official Blueprint Weightings (60 Questions Total):**
+  1. **Domain 1: Agentic Architecture & Orchestration (~27% | 16/60 Qs):** Multi-agent systems, subagent delegation (workers don't inherit parent context), agentic loops, stop reasons (`tool_use` vs `end_turn`), session checkpointing, infinite loop circuit breakers, parallel tool calls, evaluator-optimizer patterns.
+  2. **Domain 2: Claude Code Configuration & Workflows (~20% | 12/60 Qs):** `CLAUDE.md` hierarchy (global vs root vs subdirectory), custom skills (`.claude/skills/`), hooks, Plan Mode (`/plan`), headless CI/CD scripting (`-p` / `--print`), permission security.
+  3. **Domain 3: Prompt Engineering & Structured Output (~20% | 12/60 Qs):** Forcing structured output via tool choice (`tool_choice: {"type": "tool", "name": "..."}`), semantic XML tags (`<documents>`, `<instructions>`), pre-filling assistant responses, extended thinking budget allocation and billing, multi-pass review loops, temperature calibration.
+  4. **Domain 4: Tool Design & Model Context Protocol (MCP) Integration (~18% | 11/60 Qs):** MCP primitives (Resources vs Tools vs Prompts), transports (`stdio` for local CLI vs `SSE` for remote servers), tool schema quality & parameter descriptions, error handling contracts (`is_error: true`), resource subscriptions.
+  5. **Domain 5: Context Management & Reliability (~15% | 9/60 Qs):** Prompt Caching mechanics (up to 4 breakpoints, exact prefix ordering, 1024/2048 token thresholds), Message Batches API (50% discount, 24h SLA), streaming TTFT, indirect prompt injection defenses (sandwich defense, data boundaries), rate limits & exponential backoff, enterprise data privacy.
 
-The app comes loaded with a comprehensive built-in bank of authentic scenario questions and includes an **In-App JSON Importer** (`Question Bank -> Import Questions JSON`) so you can paste additional question batches anytime!
+The app comes loaded with a comprehensive built-in bank of authentic scenario questions strictly weighted to this blueprint, and includes an **In-App JSON Importer** (`Question Bank -> Import Questions JSON`) so you can paste additional question batches anytime!
 
 ---
 
