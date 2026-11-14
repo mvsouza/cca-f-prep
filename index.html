@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude CCA-F Architect Exam Simulator & Mastery Engine</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">C</div>
+        <div class="logo-text">
+          <h1>Claude CCA-F Architect</h1>
+          <span>Exam Prep & Mastery Engine</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" data-view="dashboard">
+          <span>📊</span> Dashboard & Metrics
+        </button>
+        <button class="nav-btn" data-view="free">
+          <span>🎯</span> Free Mode (Adaptive)
+        </button>
+        <button class="nav-btn" data-view="mock">
+          <span>⏱️</span> Mock Exam (Timed)
+        </button>
+        <button class="nav-btn" data-view="bank">
+          <span>📚</span> Question Bank
+        </button>
+      </nav>
+
+      <div class="header-status">
+        <div class="clearance-pill">
+          <span>🎯 Target 100%:</span>
+          <strong id="header-clearance-text">0% Cleared</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Views -->
+  <main>
+
+    <!-- VIEW 1: DASHBOARD -->
+    <section id="view-dashboard" class="view-section active">
+      <h2 class="section-title">Study XP & Certification Readiness</h2>
+      <p class="section-subtitle">Adaptive tracking of your journey toward 100% question bank mastery and official CCA-F passing benchmark (720/1000).</p>
+
+      <!-- Key Metrics Row -->
+      <div class="metrics-grid">
+        <div class="metric-card success">
+          <div class="metric-header">
+            <span>Bank Cleared (Mastery)</span>
+            <span>🎯 100% Goal</span>
+          </div>
+          <div class="metric-value" id="metric-mastery-val">0%</div>
+          <div class="metric-sub" id="metric-mastery-sub">0 of 0 questions cleared</div>
+          <div class="progress-container">
+            <div class="progress-bar success" id="metric-mastery-bar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="metric-card info">
+          <div class="metric-header">
+            <span>Bank Coverage</span>
+            <span>👁️ Questions Seen</span>
+          </div>
+          <div class="metric-value" id="metric-coverage-val">0%</div>
+          <div class="metric-sub" id="metric-coverage-sub">0 seen • 0 unseen remaining</div>
+          <div class="progress-container">
+            <div class="progress-bar" id="metric-coverage-bar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span>Overall Success Rate</span>
+            <span>📈 Accuracy</span>
+          </div>
+          <div class="metric-value" id="metric-accuracy-val">0%</div>
+          <div class="metric-sub" id="metric-accuracy-sub">0 correct of 0 attempts</div>
+        </div>
+
+        <div class="metric-card coral">
+          <div class="metric-header">
+            <span>Latest Mock Score</span>
+            <span>🎓 Scaled (100-1000)</span>
+          </div>
+          <div class="metric-value" id="metric-mock-val">N/A</div>
+          <div class="metric-sub" id="metric-mock-sub">No mock exams taken yet</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions Banner -->
+      <div class="action-banner">
+        <div class="action-card">
+          <div>
+            <h3>Adaptive Free Practice</h3>
+            <p>Smart algorithm feeds fresh questions and automatically re-surfaces failed questions until you master them with 2 consecutive right answers.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn-primary" id="btn-dash-start-free">Start Adaptive Practice</button>
+            <button class="btn-secondary" id="btn-dash-drill-failed">Drill Failed Questions (<span id="count-needs-practice">0</span>)</button>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div>
+            <h3>Official Mock Simulation</h3>
+            <p>Timed 60-question exam (120 minutes) strictly simulating Pearson VUE conditions with scaled 100-1000 scoring and post-test review.</p>
+          </div>
+          <div>
+            <button class="btn-primary" id="btn-dash-start-mock" style="background: var(--claude-coral);">Launch 60-Q Full Mock Exam</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spaced Repetition Mastery Queue Info -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">🧠 Spaced Repetition Mastery Queue</h3>
+        <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem;">
+          To reach <strong>100% Cleared</strong>, every question failed must be answered correctly <strong>2 consecutive times</strong>. If you miss a question at any point, its streak resets to 0.
+        </p>
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="badge badge-mastery-failed">Needs Practice</span>
+            <strong id="count-needs-practice-2" style="font-size: 1.1rem; color: #f87171;">0</strong>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="badge badge-mastery-learning">Learning (1/2 Correct)</span>
+            <strong id="count-learning" style="font-size: 1.1rem; color: #fbbf24;">0</strong>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="badge badge-mastery-mastered">Mastered (2/2 Cleared)</span>
+            <strong id="count-mastered" style="font-size: 1.1rem; color: #34d399;">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Domain Mastery Section -->
+      <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Domain Competency Breakdown</h3>
+      <div class="domain-grid" id="dashboard-domains-list">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Past Mock Exams History -->
+      <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Mock Exam History & Progression</h3>
+      <div class="card" style="overflow-x: auto; padding: 0.5rem;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem; text-align: left;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border-subtle); color: var(--text-secondary);">
+              <th style="padding: 0.75rem;">Date</th>
+              <th style="padding: 0.75rem;">Scaled Score</th>
+              <th style="padding: 0.75rem;">Result</th>
+              <th style="padding: 0.75rem;">Accuracy</th>
+              <th style="padding: 0.75rem;">Time Spent</th>
+              <th style="padding: 0.75rem;">Review</th>
+            </tr>
+          </thead>
+          <tbody id="mock-history-table-body">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VIEW 2: FREE MODE (Adaptive Learning) -->
+    <section id="view-free" class="view-section">
+      <div class="practice-container">
+        
+        <!-- Controls & Filters Toolbar -->
+        <div class="practice-controls">
+          <div class="filter-group">
+            <label for="free-domain-filter">Domain:</label>
+            <select id="free-domain-filter" class="app-select">
+              <option value="all">All Domains (Balanced)</option>
+              <option value="Agentic Architecture & Orchestration">1. Agentic Architecture & Orchestration</option>
+              <option value="Tool Design & Model Context Protocol (MCP) Integration">2. Tool Design & MCP Integration</option>
+              <option value="Claude Code Configuration & Workflows">3. Claude Code & Workflows</option>
+              <option value="Context Window & Performance Optimization">4. Context & Performance Optimization</option>
+              <option value="Security, Guardrails & Compliance">5. Security, Guardrails & Compliance</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="free-mode-filter">Feed Strategy:</label>
+            <select id="free-mode-filter" class="app-select">
+              <option value="smart">🧠 Wise Adaptive Feeder (Recommended)</option>
+              <option value="failed_only">⚠️ Drill Failed / Learning Only</option>
+              <option value="unseen_only">👁️ Unseen Questions Only</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Question Box -->
+        <div class="question-box">
+          <div class="question-meta">
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <span class="badge badge-domain" id="free-q-domain">Domain</span>
+              <span class="badge badge-mastery-unseen" id="free-q-mastery">Unseen</span>
+            </div>
+            <span style="font-size: 0.8rem; font-family: monospace; color: var(--text-muted);" id="free-q-id">ID</span>
+          </div>
+
+          <div class="question-text" id="free-q-text">
+            Loading question...
+          </div>
+
+          <div class="options-container" id="free-options-list">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button class="btn-primary" id="btn-free-submit" disabled>Submit Answer</button>
+            <button class="btn-primary" id="btn-free-next" style="display: none;">Next Question →</button>
+          </div>
+
+          <!-- Instant Feedback / Explanation Card -->
+          <div class="explanation-card" id="free-explanation-card">
+            <div class="explanation-title" id="free-explanation-title"></div>
+            <div class="explanation-text" id="free-explanation-text"></div>
+            <div class="explanation-reference">
+              <strong>Official Reference:</strong>
+              <a href="#" target="_blank" rel="noopener noreferrer" id="free-explanation-link">Documentation Link</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 3: MOCK EXAM MODE -->
+    <section id="view-mock" class="view-section">
+      
+      <!-- Launcher Screen -->
+      <div id="mock-launcher-card" class="card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 2.5rem;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Official CCA-F Mock Simulator</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+          Simulate official test conditions. Questions are sampled proportionally across all 5 domains. No explanations or answers will be revealed until you submit.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Full Simulation</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">60 Questions • 120 Minutes<br/>Official Scaled Benchmark (720/1000)</p>
+            <button class="btn-primary" id="btn-start-full-mock" style="width: 100%;">Start 60-Q Full Mock</button>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Sprint Checkpoint</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">15 Questions • 30 Minutes<br/>Quick domain diagnostic</p>
+            <button class="btn-secondary" id="btn-start-mini-mock" style="width: 100%;">Start 15-Q Sprint Mock</button>
+          </div>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted);">
+          All questions answered during a mock exam automatically update your spaced repetition learning stats and will queue failed questions for future redemption.
+        </p>
+      </div>
+
+      <!-- Active Mock Exam Session -->
+      <div id="mock-active-card" style="display: none; max-width: 900px; margin: 0 auto;">
+        
+        <!-- Sticky Mock Top Bar -->
+        <div class="mock-bar">
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">Question</span>
+            <strong id="mock-q-current-num" style="font-size: 1.15rem; margin-left: 0.3rem;">1</strong>
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">of</span>
+            <strong id="mock-q-total-num" style="font-size: 1.15rem;">60</strong>
+          </div>
+
+          <div class="timer-box">
+            <span>⏱️</span>
+            <span id="mock-timer">120:00</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="mock-flag-checkbox" style="cursor: pointer;" />
+            <label for="mock-flag-checkbox" style="font-size: 0.85rem; cursor: pointer;">Flag for Review</label>
+          </div>
+        </div>
+
+        <!-- Question Palette -->
+        <div class="palette-container" id="mock-question-palette">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Question Display Box -->
+        <div class="question-box">
+          <div class="question-text" id="mock-q-text">
+            Mock Question Text
+          </div>
+
+          <div class="options-container" id="mock-options-list">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+            <button class="btn-secondary" id="btn-mock-prev">← Previous</button>
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn-secondary" id="btn-mock-next">Next →</button>
+              <button class="btn-primary" id="btn-mock-submit" style="background: var(--claude-coral);">Finish & Submit Exam</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- VIEW 4: POST-MOCK EXAM SCORECARD & REVIEW -->
+    <section id="view-review" class="view-section">
+      <div style="max-width: 900px; margin: 0 auto;">
+        
+        <!-- Scorecard Banner -->
+        <div class="scorecard-banner" id="review-scorecard-banner">
+          <div class="score-badge-large" id="review-pass-badge">OFFICIAL PASS</div>
+          <div class="score-number" id="review-scaled-score">780 / 1000</div>
+          <div class="score-benchmark" id="review-stats-sub">Raw Accuracy: 47/60 (78%) • Benchmark: 720/1000</div>
+          <button class="btn-primary" id="btn-review-back-dash" onclick="document.querySelector('[data-view=dashboard]').click()">Back to Dashboard</button>
+        </div>
+
+        <!-- Domain Diagnostic Breakdown -->
+        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Domain Competency Diagnostic</h3>
+        <div class="domain-grid" id="review-domain-breakdown" style="margin-bottom: 2rem;">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Question by Question Review -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h3 style="font-size: 1.25rem;">Detailed Questions Analysis</h3>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn-secondary" id="btn-review-filter-all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">All Questions</button>
+            <button class="btn-secondary" id="btn-review-filter-wrong" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; color: #f87171;">Incorrect Only</button>
+            <button class="btn-secondary" id="btn-review-filter-right" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; color: #34d399;">Correct Only</button>
+          </div>
+        </div>
+
+        <div id="review-questions-list">
+          <!-- Injected via JavaScript -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 5: QUESTION BANK & DATA MANAGEMENT -->
+    <section id="view-bank" class="view-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 class="section-title">Question Bank & Data Management</h2>
+          <p class="section-subtitle" id="bank-total-count">0 Questions in Local Bank</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn-primary" id="btn-open-import-modal">📥 Import Questions JSON</button>
+          <button class="btn-secondary" id="btn-export-data">💾 Export Backup</button>
+          <button class="btn-danger" id="btn-reset-data">Reset Progress</button>
+        </div>
+      </div>
+
+      <!-- Bank Table -->
+      <div class="card" style="overflow-x: auto; padding: 0.5rem;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border-subtle); color: var(--text-secondary); font-size: 0.85rem;">
+              <th style="padding: 0.75rem;">ID</th>
+              <th style="padding: 0.75rem;">Domain</th>
+              <th style="padding: 0.75rem;">Question Prompt</th>
+              <th style="padding: 0.75rem;">Mastery Status</th>
+              <th style="padding: 0.75rem;">Score</th>
+            </tr>
+          </thead>
+          <tbody id="bank-table-body">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Import Modal -->
+  <div class="modal-overlay" id="import-modal">
+    <div class="modal-card">
+      <h3 style="margin-bottom: 0.5rem;">Import Question Batch (JSON)</h3>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+        Paste a valid JSON array of questions matching the CCA-F schema to expand your question bank up to 400 questions.
+      </p>
+      <textarea class="json-input" id="json-import-textarea" placeholder='[
+  {
+    "id": "cca-custom-001",
+    "domain": "Agentic Architecture & Orchestration",
+    "question": "Sample architectural question...",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "correct": 0,
+    "explanation": "Self explanatory rationale...",
+    "referenceTitle": "Anthropic Docs",
+    "referenceUrl": "https://docs.anthropic.com"
+  }
+]'></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+        <button class="btn-secondary" id="btn-close-import-modal">Cancel</button>
+        <button class="btn-primary" id="btn-confirm-import">Confirm Import</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/questions.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
