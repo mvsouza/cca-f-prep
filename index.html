@@ -93,25 +93,15 @@
   }
   </script>
 
-  <!-- Google Analytics 4 (GA4) -->
+  <!-- Google tag (gtag.js) - Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1CH30V5KJ"></script>
   <script>
-    window.GA_MEASUREMENT_ID = window.GA_MEASUREMENT_ID || localStorage.getItem('ccaf_ga_id') || 'G-D1CH30V5KJ';
-    if (window.GA_MEASUREMENT_ID && window.GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX') {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_MEASUREMENT_ID}`;
-      document.head.appendChild(script);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', window.GA_MEASUREMENT_ID);
-      window.gtag = gtag;
-    } else {
-      window.gtag = function() {
-        console.log('[GA4 Event]', ...arguments);
-      };
-    }
+    gtag('config', 'G-D1CH30V5KJ');
+    window.GA_MEASUREMENT_ID = 'G-D1CH30V5KJ';
   </script>
 
   <link rel="stylesheet" href="css/styles.css" />
