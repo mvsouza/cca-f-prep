@@ -24,17 +24,20 @@ Then open `http://localhost:8080` in your web browser.
 
 ## 🎯 Question Bank Sizing & Strategy
 
-The app currently ships with **504 unique, high-yield scenario questions** compiled directly from open-source community resources (including Utkarsh's 6 full-length mock exams and Dojo task statement drills):
+The app currently ships with **701 unique, high-yield scenario questions** compiled and deduplicated directly from premier open-source resources:
+1. **[Neerajkr7 CCA Exam Practice](https://neerajkr7.github.io/cca-foundations-exam-practice/)** (200 scenario questions)
+2. **Utkarsh1agarwal Claude Architect Exam Guide** (342 questions across 6 mock exams)
+3. **Dojo Exam Task Statement Drills** (163 blueprint task statement questions)
 
-* **Total Questions in Bank:** **504 questions**
-* **Why 500+?**  
-  With 60 questions per real exam, a bank of 504 questions provides more than **8 completely unique, non-repeating mock exams**, ensuring total curriculum mastery without memorization.
+* **Total Clean Questions in Bank:** **701 questions** (after removing near-identical duplicates with similarity > 0.80)
+* **Coverage Margin:**  
+  With 60 questions per real exam, a bank of 701 questions provides **more than 11 completely unique, non-repeating mock exams**, giving exhaustive exposure to every edge case and scenario variation.
 * **Domain Distribution in Master Bank:**
-  1. **Domain 1: Agentic Architecture & Orchestration:** 108 questions (~21.4%)
-  2. **Domain 2: Claude Code Configuration & Workflows:** 123 questions (~24.4%)
-  3. **Domain 3: Prompt Engineering & Structured Output:** 96 questions (~19.0%)
-  4. **Domain 4: Tool Design & Model Context Protocol (MCP) Integration:** 96 questions (~19.0%)
-  5. **Domain 5: Context Management & Reliability:** 81 questions (~16.1%)
+  1. **Domain 1: Agentic Architecture & Orchestration:** 295 questions (~42.1%)
+  2. **Domain 2: Claude Code Configuration & Workflows:** 123 questions (~17.5%)
+  3. **Domain 3: Prompt Engineering & Structured Output:** 108 questions (~15.4%)
+  4. **Domain 4: Tool Design & Model Context Protocol (MCP) Integration:** 95 questions (~13.6%)
+  5. **Domain 5: Context Management & Reliability:** 80 questions (~11.4%)
 
 * **Official 60-Question Mock Weighting:**
   When generating a 60-question mock exam, the engine dynamically balances selection against the official blueprint:
