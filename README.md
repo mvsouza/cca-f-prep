@@ -130,12 +130,10 @@ The app comes loaded with a comprehensive built-in bank of authentic scenario qu
    ```
 
 ### 📊 Google Analytics 4 (GA4) Configuration
-To monitor your traffic:
-* Replace `'G-XXXXXXXXXX'` in `index.html` with your GA4 Measurement ID, or
-* Open your browser console on the deployed page and run:
-  ```javascript
-  localStorage.setItem('ccaf_ga_id', 'G-YOUR_MEASUREMENT_ID');
-  ```
+Google Analytics 4 is pre-configured with Measurement ID `G-D1CH30V5KJ` to monitor live candidate traffic, exam completion rates, and domain diagnostics. You can also override it locally in your browser console:
+```javascript
+localStorage.setItem('ccaf_ga_id', 'G-YOUR_MEASUREMENT_ID');
+```
 
 ---
 
