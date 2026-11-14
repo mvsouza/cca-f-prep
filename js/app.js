@@ -110,14 +110,16 @@ document.addEventListener("DOMContentLoaded", () => {
     domainContainer.innerHTML = "";
 
     const domains = [
-      "Agentic Architecture & Orchestration",
-      "Tool Design & Model Context Protocol (MCP) Integration",
-      "Claude Code Configuration & Workflows",
-      "Context Window & Performance Optimization",
-      "Security, Guardrails & Compliance"
+      { name: "Agentic Architecture & Orchestration", weight: "27%" },
+      { name: "Claude Code Configuration & Workflows", weight: "20%" },
+      { name: "Prompt Engineering & Structured Output", weight: "20%" },
+      { name: "Tool Design & Model Context Protocol (MCP) Integration", weight: "18%" },
+      { name: "Context Management & Reliability", weight: "15%" }
     ];
 
-    domains.forEach(d => {
+    domains.forEach(dObj => {
+      const d = dObj.name;
+      const dWeight = dObj.weight;
       const dData = metrics.domainBreakdown[d] || { total: 0, seen: 0, mastered: 0, correct: 0, attempts: 0 };
       const domainMastery = dData.total > 0 ? Math.round((dData.mastered / dData.total) * 100) : 0;
       const domainAccuracy = dData.attempts > 0 ? Math.round((dData.correct / dData.attempts) * 100) : 0;
@@ -126,14 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
       item.className = "domain-item";
       item.innerHTML = `
         <div class="domain-info">
-          <span>${d}</span>
+          <span>${d} <span class="badge" style="background: rgba(217, 119, 6, 0.15); color: #f59e0b; font-size: 0.7rem; margin-left: 0.3rem;">${dWeight} Exam Weight</span></span>
           <span>${domainMastery}% Mastered</span>
         </div>
         <div class="progress-container">
           <div class="progress-bar ${domainMastery >= 80 ? 'success' : ''}" style="width: ${domainMastery}%"></div>
         </div>
         <div class="domain-stats-sub">
-          <span>${dData.mastered}/${dData.total} Cleared</span>
+          <span>${dData.mastered}/${dData.total} Questions Cleared</span>
           <span>Accuracy: ${domainAccuracy}%</span>
         </div>
       `;

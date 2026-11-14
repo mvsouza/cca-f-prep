@@ -117,35 +117,59 @@ class MockExamEngine {
   }
 
   /**
-   * Generates a balanced mock exam.
-   * If totalQuestions is 60 (standard) or 30 (mini-mock).
+   * Generates a mock exam weighted according to the official CCA-F blueprint:
+   * - Agentic Architecture & Orchestration: 27% (~16/60)
+   * - Claude Code Configuration & Workflows: 20% (~12/60)
+   * - Prompt Engineering & Structured Output: 20% (~12/60)
+   * - Tool Design & Model Context Protocol (MCP) Integration: 18% (~11/60)
+   * - Context Management & Reliability: 15% (~9/60)
    */
   generateMockExam(questionCount = 60, timeLimitMinutes = 120) {
     const allQuestions = [...this.storage.getAllQuestions()];
     const count = Math.min(questionCount, allQuestions.length);
 
+    const weights = {
+      "Agentic Architecture & Orchestration": 0.27,
+      "Claude Code Configuration & Workflows": 0.20,
+      "Prompt Engineering & Structured Output": 0.20,
+      "Tool Design & Model Context Protocol (MCP) Integration": 0.18,
+      "Context Management & Reliability": 0.15
+    };
+
     // Group questions by domain
     const byDomain = {};
+    Object.keys(weights).forEach(d => { byDomain[d] = []; });
+
     allQuestions.forEach(q => {
       const d = q.domain || 'General';
       if (!byDomain[d]) byDomain[d] = [];
       byDomain[d].push(q);
     });
 
-    const domains = Object.keys(byDomain);
     const selected = [];
-    const questionsPerDomain = Math.floor(count / domains.length);
-    let remainder = count % domains.length;
+    const domainTargets = {};
+    let allocated = 0;
 
-    // Balanced pick from each domain
-    domains.forEach(d => {
-      const pool = byDomain[d].sort(() => 0.5 - Math.random());
-      const takeCount = questionsPerDomain + (remainder > 0 ? 1 : 0);
-      if (remainder > 0) remainder--;
-      selected.push(...pool.slice(0, takeCount));
+    // Calculate target quota per domain
+    Object.keys(weights).forEach(d => {
+      const target = Math.round(count * weights[d]);
+      domainTargets[d] = target;
+      allocated += target;
     });
 
-    // If still short due to domain size imbalances, fill from remaining
+    // Adjust slight rounding difference against requested count
+    if (allocated !== count && domainTargets["Agentic Architecture & Orchestration"]) {
+      domainTargets["Agentic Architecture & Orchestration"] += (count - allocated);
+    }
+
+    // Sample from each domain according to target quota
+    Object.keys(domainTargets).forEach(d => {
+      const quota = domainTargets[d];
+      const pool = (byDomain[d] || []).sort(() => 0.5 - Math.random());
+      selected.push(...pool.slice(0, quota));
+    });
+
+    // If any domain was short of questions, fill remainder from remaining unused questions
     if (selected.length < count) {
       const selectedIds = new Set(selected.map(q => q.id));
       const remaining = allQuestions.filter(q => !selectedIds.has(q.id)).sort(() => 0.5 - Math.random());
