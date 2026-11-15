@@ -114,14 +114,17 @@
       <div class="logo-area">
         <div class="logo-icon">C</div>
         <div class="logo-text">
-          <h1>Claude CCA-F Architect</h1>
-          <span>Exam Prep & Mastery Engine</span>
+          <h1 id="header-main-title">Claude Architect Prep</h1>
+          <span id="header-track-subtitle">Foundations &amp; Professional</span>
         </div>
       </div>
 
       <nav class="nav-tabs">
         <button class="nav-btn active" data-view="dashboard">
           <span>📊</span> Dashboard
+        </button>
+        <button class="nav-btn" data-view="shorts">
+          <span>⚡</span> Micro-Shorts
         </button>
         <button class="nav-btn" data-view="free">
           <span>🎯</span> Free Practice
@@ -141,6 +144,12 @@
       </nav>
 
       <div class="header-status">
+        <div class="track-selector-box">
+          <select id="app-track-select" class="track-select" aria-label="Select Certification Track">
+            <option value="ccaf">CCA-F: Foundations</option>
+            <option value="ccarp">CCAR-P: Professional</option>
+          </select>
+        </div>
         <a href="https://github.com/mvsouza/cca-f-prep" target="_blank" rel="noopener noreferrer" class="btn-star" id="btn-github-star">
           <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
           <span>Star on GitHub</span>
@@ -642,6 +651,78 @@
       </div>
     </section>
 
+    <!-- VIEW 8: MICRO-SHORTS & ANIMATED INFOGRAPHICS -->
+    <section id="view-shorts" class="view-section">
+      <div class="shorts-container">
+        
+        <div class="shorts-reel-card">
+          <!-- Top Reel Status & Streak -->
+          <div class="shorts-header">
+            <div>
+              <span class="badge badge-domain" id="shorts-domain-badge">Domain 1: Integration</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;" id="shorts-pill-counter">Pill 1 of 6</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; font-weight: 700; font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 999px;">
+                🔥 <span id="shorts-streak-count">1</span> Streak
+              </span>
+            </div>
+          </div>
+
+          <!-- Rapid Progress Bar (Reels Style) -->
+          <div class="shorts-progress-bar">
+            <div class="shorts-progress-fill" id="shorts-progress-fill" style="width: 16%;"></div>
+          </div>
+
+          <!-- Headline & Hook -->
+          <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem;" id="shorts-title">
+            The 100-Tool Nightmare: Dynamic Discovery
+          </h2>
+          <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1.25rem;" id="shorts-hook">
+            Registering 50+ tools directly into Claude degrades precision and explodes prompt token costs. Here is the enterprise architectural fix.
+          </p>
+
+          <!-- Animated Interactive Infographic Viewport -->
+          <div class="shorts-infographic-viewport" id="shorts-infographic-viewport">
+            <!-- Dynamic SVG animation injected here -->
+          </div>
+
+          <!-- Core Architecture Breakdown -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem;">
+            <h4 style="font-size: 0.95rem; color: #60a5fa; margin-bottom: 0.35rem;">🏗️ Architectural Pattern:</h4>
+            <p style="font-size: 0.875rem; color: #f1f5f9; line-height: 1.6;" id="shorts-concept">
+              Use a <strong>Meta-Tool Discovery registry</strong>. Provide Claude with a single <code>search_tools</code> interface. It retrieves only the 2 required tool schemas at runtime, preventing capability bloat and cutting token spend by up to 90%.
+            </p>
+          </div>
+
+          <!-- Exam Golden Rule -->
+          <div class="shorts-takeaway-box">
+            <strong style="color: #fbbf24; display: block; font-size: 0.825rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">
+              ⭐ Exam Golden Takeaway:
+            </strong>
+            <span style="font-size: 0.875rem; color: #f8fafc;" id="shorts-takeaway">
+              Whenever a scenario mentions routing errors from too many tools, the answer is always <strong>dynamic tool discovery or hierarchical subagents</strong>—never increasing max tokens.
+            </span>
+          </div>
+
+          <!-- Controls: Voice Narration & Stepper -->
+          <div class="shorts-actions">
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-audio-narrate" id="btn-shorts-audio">
+                <span>🔊</span> Listen (Web Audio)
+              </button>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-secondary" id="btn-shorts-prev" style="padding: 0.55rem 1rem;">⏮ Prev Pill</button>
+              <button class="btn-primary" id="btn-shorts-next" style="padding: 0.55rem 1.25rem; background: var(--claude-accent);">Next Pill ⏭</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- Site Footer -->
@@ -687,6 +768,7 @@
 
   <!-- Scripts -->
   <script src="js/questions.js"></script>
+  <script src="js/questions_ccarp.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/app.js"></script>

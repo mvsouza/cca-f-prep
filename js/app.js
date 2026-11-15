@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll(".nav-btn");
   const views = {
     dashboard: document.getElementById("view-dashboard"),
+    shorts: document.getElementById("view-shorts"),
     free: document.getElementById("view-free"),
     mock: document.getElementById("view-mock"),
     review: document.getElementById("view-review"),
@@ -48,10 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const viewTitles = {
     dashboard: "Claude CCA-F Architect Exam Simulator | 700+ Questions & 100% Free Practice",
+    shorts: "⚡ Micro-Shorts Knowledge Pills | Claude Architect Prep",
     free: "Free Adaptive Practice | Claude CCA-F Architect Prep",
     mock: "Timed 60-Q Mock Exam (120 Mins) | Claude CCA-F Simulator",
     review: "Mock Exam Diagnostic & Scorecard | Claude CCA-F Simulator",
-    bank: "Master Question Bank (701 Questions) | Claude CCA-F Prep",
+    bank: "Master Question Bank | Claude CCA-F Prep",
     voucher: "$0 Partner Exam Voucher Guide | Claude CCA-F Prep",
     pitch: "14-Day Study Plan & Pitch Deck | Claude CCA-F Prep"
   };
@@ -81,6 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (targetView === 'dashboard') {
       renderDashboard();
+    } else if (targetView === 'shorts') {
+      renderCurrentShort();
     } else if (targetView === 'free') {
       loadNextFreeQuestion();
     } else if (targetView === 'bank') {
@@ -150,7 +154,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const domainContainer = document.getElementById("dashboard-domains-list");
     domainContainer.innerHTML = "";
 
-    const domains = [
+    const isCcarp = storage.currentTrack === 'ccarp';
+    const domains = isCcarp ? [
+      { name: "Integration", weight: "19%" },
+      { name: "Solution Design & Architecture", weight: "17%" },
+      { name: "Evaluation, Testing & Optimization", weight: "16%" },
+      { name: "Governance, Safety & Risk Management", weight: "14%" },
+      { name: "Stakeholder Communication & Lifecycle Management", weight: "14%" },
+      { name: "Claude Models, Prompting & Context Engineering", weight: "13%" },
+      { name: "Developer Productivity & Operational Enablement", weight: "7%" }
+    ] : [
       { name: "Agentic Architecture & Orchestration", weight: "27%" },
       { name: "Claude Code Configuration & Workflows", weight: "20%" },
       { name: "Prompt Engineering & Structured Output", weight: "20%" },
@@ -751,6 +764,337 @@ https://mvsouza.com/cca-f-prep/`;
       switchView('dashboard');
     }
   };
+
+  // ==========================================
+  // TRACK SELECTOR & MULTI-CERTIFICATION LOGIC
+  // ==========================================
+  const trackSelector = document.getElementById("app-track-select");
+  const headerTrackSubtitle = document.getElementById("header-track-subtitle");
+
+  function updateTrackUI() {
+    const isCcarp = storage.currentTrack === 'ccarp';
+    if (trackSelector) {
+      trackSelector.value = storage.currentTrack;
+    }
+    if (headerTrackSubtitle) {
+      headerTrackSubtitle.textContent = isCcarp 
+        ? "CCAR-P: Professional Track" 
+        : "CCA-F: Foundations Track";
+    }
+    updateDomainOptions();
+  }
+
+  function updateDomainOptions() {
+    const isCcarp = storage.currentTrack === 'ccarp';
+    const ccarpDomains = [
+      { name: "Integration", label: "1. Integration & Protocols (19%)" },
+      { name: "Solution Design & Architecture", label: "2. Solution Design & Architecture (17%)" },
+      { name: "Evaluation, Testing & Optimization", label: "3. Evaluation, Testing & Optimization (16%)" },
+      { name: "Governance, Safety & Risk Management", label: "4. Governance, Safety & Risk (14%)" },
+      { name: "Stakeholder Communication & Lifecycle Management", label: "5. Stakeholder Communication (14%)" },
+      { name: "Claude Models, Prompting & Context Engineering", label: "6. Models & Prompting (13%)" },
+      { name: "Developer Productivity & Operational Enablement", label: "7. Developer Productivity (7%)" }
+    ];
+    const ccafDomains = [
+      { name: "Agentic Architecture & Orchestration", label: "1. Agentic Architecture & Orchestration (27%)" },
+      { name: "Claude Code Configuration & Workflows", label: "2. Claude Code Configuration & Workflows (20%)" },
+      { name: "Prompt Engineering & Structured Output", label: "3. Prompt Engineering & Structured Output (20%)" },
+      { name: "Tool Design & Model Context Protocol (MCP) Integration", label: "4. Tool Design & MCP Integration (18%)" },
+      { name: "Context Management & Reliability", label: "5. Context Management & Reliability (15%)" }
+    ];
+    const activeDomains = isCcarp ? ccarpDomains : ccafDomains;
+    
+    if (freeDomainFilter) {
+      const currentVal = freeDomainFilter.value;
+      freeDomainFilter.innerHTML = '<option value="all">All Domains (Official Balanced Weighting)</option>' +
+        activeDomains.map(d => `<option value="${d.name}">${d.label}</option>`).join('');
+      if (activeDomains.some(d => d.name === currentVal)) {
+        freeDomainFilter.value = currentVal;
+      } else {
+        freeDomainFilter.value = "all";
+      }
+    }
+  }
+
+  if (trackSelector) {
+    trackSelector.addEventListener("change", (e) => {
+      const selectedTrack = e.target.value;
+      storage.setTrack(selectedTrack);
+      updateTrackUI();
+      renderDashboard();
+      if (currentView === 'free') {
+        loadNextFreeQuestion();
+      } else if (currentView === 'bank') {
+        renderQuestionBankManager();
+      }
+    });
+  }
+
+  // ==========================================
+  // MICRO-SHORTS KNOWLEDGE PILLS CONTROLLER
+  // ==========================================
+  const SHORTS_PILLS = [
+    {
+      id: "short-1",
+      domain: "Domain 1: Integration & Protocols (19%)",
+      title: "The 100-Tool Nightmare: Dynamic Discovery",
+      hook: "Registering 50+ tools directly into Claude degrades precision and explodes prompt token costs. Here is the enterprise architectural fix.",
+      concept: "Instead of dumping 50 tool schemas into your system prompt, use a <strong>Meta-Tool Discovery registry</strong>. Give Claude a single <code>search_tools</code> interface. It retrieves only the 2 required tool schemas dynamically at runtime, reducing capability bloat and cutting token spend by up to 90%.",
+      takeaway: "Whenever an exam scenario mentions routing errors from too many tools or context bloat, the answer is always <strong>dynamic tool discovery or hierarchical subagents</strong>—never increasing max tokens.",
+      speech: "The 100-Tool Nightmare. If you register 50 tools directly into your Claude agent, your system will hallucinate and drain your budget on every turn. Instead, use Progressive Tool Discovery with a single meta-tool called search_tools. Exam Golden Rule: whenever a question mentions tool capability bloat, the answer is dynamic tool discovery or hierarchical subagents, never increasing max tokens.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <g>
+            <rect x="20" y="55" width="120" height="50" rx="8" fill="url(#grad1)" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="80" y="85" fill="#f8fafc" font-size="12" font-weight="600" text-anchor="middle">User Request</text>
+            <path d="M 140 80 L 190 80" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
+            <rect x="190" y="45" width="140" height="70" rx="8" fill="rgba(217, 119, 6, 0.15)" stroke="#d97706" stroke-width="2" class="pulse"/>
+            <text x="260" y="75" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Claude Core</text>
+            <text x="260" y="95" fill="#cbd5e1" font-size="10" text-anchor="middle">search_tools("billing")</text>
+            <path d="M 330 80 L 380 80" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
+            <rect x="380" y="30" width="190" height="100" rx="8" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" stroke-width="1.5"/>
+            <text x="475" y="55" fill="#4ade80" font-size="12" font-weight="700" text-anchor="middle">Dynamic Tool Registry</text>
+            <rect x="395" y="65" width="160" height="24" rx="4" fill="#0f172a" stroke="#334155"/>
+            <text x="475" y="81" fill="#94a3b8" font-size="9" text-anchor="middle">100+ Total Registered Tools</text>
+            <rect x="395" y="95" width="160" height="24" rx="4" fill="rgba(34, 197, 94, 0.25)" stroke="#22c55e"/>
+            <text x="475" y="111" fill="#86efac" font-size="10" font-weight="600" text-anchor="middle">⚡ Injects 2 Matched Tools</text>
+          </g>
+        </svg>
+      `
+    },
+    {
+      id: "short-2",
+      domain: "Domain 1: Integration & Protocols (19%)",
+      title: "Production MCP: Stdio vs SSE / HTTP",
+      hook: "Why does local stdio MCP fail the moment you deploy your agent to AWS or Kubernetes? Here is the enterprise distinction.",
+      concept: "<strong>stdio</strong> launches a local child OS process. It is strictly meant for local developer tools (like Claude Code on a laptop). For enterprise container clouds, you must deploy <strong>SSE (Server-Sent Events) over HTTP</strong>, protected by mTLS and OAuth 2.0 JWT bearer authorization.",
+      takeaway: "On the CCAR-P exam: Production multi-container enterprise MCP = <strong>SSE / HTTP with OAuth 2.0</strong>. Local developer CLI = <strong>stdio</strong>.",
+      speech: "Production MCP: Stdio versus SSE over HTTP. Why does local stdio MCP fail the moment you deploy to Kubernetes? stdio spawns a local child process meant only for local developer machines. In production clouds, you must use SSE over HTTP with mutual TLS and OAuth 2.0 bearer tokens.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <rect x="30" y="30" width="240" height="105" rx="8" fill="rgba(239, 68, 68, 0.08)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="150" y="55" fill="#f87171" font-size="13" font-weight="700" text-anchor="middle">Local Stdio (CLI / Dev Only)</text>
+          <text x="150" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Child Process via stdin / stdout</text>
+          <text x="150" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">❌ No remote networking • Single host</text>
+
+          <rect x="330" y="30" width="240" height="105" rx="8" fill="rgba(34, 197, 94, 0.08)" stroke="#22c55e" stroke-width="1.5"/>
+          <text x="450" y="55" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Cloud SSE / HTTP (Production)</text>
+          <text x="450" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">mTLS + OAuth 2.0 JWT Bearer</text>
+          <text x="450" y="105" fill="#86efac" font-size="9" text-anchor="middle">✅ Scalable across Kubernetes & VPCs</text>
+        </svg>
+      `
+    },
+    {
+      id: "short-3",
+      domain: "Domain 4: Governance & Security (14%)",
+      title: "Multi-Tenant Isolation: Never Trust The Prompt",
+      hook: "Asking Claude to filter tenant data via prompt instruction is a critical vulnerability. Here is the compliant pattern.",
+      concept: "Prompt instructions like 'Only return records for Tenant B' can be easily bypassed by indirect prompt injections found in retrieved documents. Enterprise multi-tenancy must be enforced <strong>deterministically at the Vector DB retrieval filter</strong>: <code>metadata: { tenant_id: session.tenant_id }</code>.",
+      takeaway: "Security and data segregation must ALWAYS be enforced <strong>deterministically in code or the database layer</strong>, never probabilistically inside the LLM prompt.",
+      speech: "Multi-Tenant Isolation: Never trust the prompt. If you instruct Claude in the prompt to only show Tenant B data, an indirect prompt injection in the document can override it. The only compliant pattern is deterministic metadata pre-filtering at the database layer before retrieval.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <rect x="20" y="45" width="130" height="70" rx="8" fill="rgba(59, 130, 246, 0.12)" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="85" y="75" fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle">Tenant A User</text>
+          <text x="85" y="95" fill="#cbd5e1" font-size="10" text-anchor="middle">tenant_id = 'ORG-42'</text>
+
+          <path d="M 150 80 L 220 80" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
+
+          <rect x="220" y="35" width="170" height="90" rx="8" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" stroke-width="2"/>
+          <text x="305" y="65" fill="#4ade80" font-size="12" font-weight="700" text-anchor="middle">Vector DB Hard Filter</text>
+          <text x="305" y="85" fill="#f8fafc" font-size="10" font-family="monospace" text-anchor="middle">tenant_id == 'ORG-42'</text>
+          <text x="305" y="105" fill="#86efac" font-size="9" text-anchor="middle">🛡️ Zero Cross-Tenant Leakage</text>
+
+          <path d="M 390 80 L 460 80" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
+
+          <rect x="460" y="45" width="120" height="70" rx="8" fill="rgba(217, 119, 6, 0.15)" stroke="#d97706" stroke-width="1.5"/>
+          <text x="520" y="75" fill="#fbbf24" font-size="12" font-weight="700" text-anchor="middle">Claude Prompt</text>
+          <text x="520" y="95" fill="#cbd5e1" font-size="9" text-anchor="middle">Safe Isolated Context</text>
+        </svg>
+      `
+    },
+    {
+      id: "short-4",
+      domain: "Domain 2: Solution Design & Architecture (17%)",
+      title: "Workflows vs Autonomous Agent Swarms",
+      hook: "When should you NOT use an autonomous AI agent? Enterprise SLAs demand predictability.",
+      concept: "If an enterprise task has strict SLAs (under 3 seconds), zero tolerance for deviation, and predictable steps (such as structured insurance claim intake), an autonomous agent loop is an anti-pattern. Use <strong>deterministic workflow chains</strong> with schema-validated outputs instead.",
+      takeaway: "Reserve autonomous loops only for open-ended problem spaces (such as coding or research). For compliance, auditability, and speed, <strong>deterministic workflows beat autonomous loops</strong>.",
+      speech: "Workflows versus Autonomous Agent Swarms. When should you not use an autonomous agent? If your task has strict latency SLAs, zero tolerance for deviation, and predictable steps, an autonomous agent loop will be too slow and non-deterministic. Use structured code workflow chains instead.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <rect x="30" y="30" width="240" height="105" rx="8" fill="rgba(34, 197, 94, 0.08)" stroke="#22c55e" stroke-width="1.5"/>
+          <text x="150" y="55" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Deterministic Workflow</text>
+          <text x="150" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Step A ➡️ Step B ➡️ Strict JSON</text>
+          <text x="150" y="105" fill="#86efac" font-size="9" text-anchor="middle">⚡ SLA &lt; 2s • 100% Audit Trail</text>
+
+          <rect x="330" y="30" width="240" height="105" rx="8" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="450" y="55" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Autonomous Agent Loop</text>
+          <text x="450" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Plan 🔁 Tool 🔁 Evaluate Loop</text>
+          <text x="450" y="105" fill="#fde68a" font-size="9" text-anchor="middle">⚠️ Non-deterministic • Open-ended Only</text>
+        </svg>
+      `
+    },
+    {
+      id: "short-5",
+      domain: "Domain 2: Solution Design & Architecture (17%)",
+      title: "3-Tier Model Cascading: Save 85% Cost",
+      hook: "Routing every query to Opus is throwing money into a furnace. Here is the production cascade pattern.",
+      concept: "Deploy a 3-tier routing cascade: <strong>Claude 3.5 Haiku</strong> handles triage, routing, and intent classification (80% of volume). Escalate multi-step tool calls to <strong>Claude 3.5 Sonnet</strong> (15%). Reserve <strong>Claude 3.5 Opus</strong> strictly for multi-step reasoning, mathematical proofs, or legal edge cases (5%).",
+      takeaway: "Architectural efficiency is measured in cost-per-successful-task. Model routing cascades are the primary pattern tested for production cost and latency optimization.",
+      speech: "Three-Tier Model Cascading: Save 85% Cost. Sending every enterprise query to Opus throws money away. Use Claude 3.5 Haiku for sub-second intent classification on 80% of queries. Escalate coding and tool use to Sonnet, and reserve Opus exclusively for complex legal or mathematical reasoning.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <rect x="30" y="40" width="160" height="80" rx="8" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="2"/>
+          <text x="110" y="70" fill="#93c5fd" font-size="13" font-weight="700" text-anchor="middle">Haiku 3.5</text>
+          <text x="110" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">80% Traffic</text>
+          <text x="110" y="108" fill="#60a5fa" font-size="9" text-anchor="middle">Sub-second Triage</text>
+
+          <rect x="220" y="40" width="160" height="80" rx="8" fill="rgba(217, 119, 6, 0.15)" stroke="#d97706" stroke-width="2"/>
+          <text x="300" y="70" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Sonnet 3.5</text>
+          <text x="300" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">15% Traffic</text>
+          <text x="300" y="108" fill="#f59e0b" font-size="9" text-anchor="middle">Coding & Tool Agent</text>
+
+          <rect x="410" y="40" width="160" height="80" rx="8" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="2"/>
+          <text x="490" y="70" fill="#d8b4fe" font-size="13" font-weight="700" text-anchor="middle">Opus 3.5</text>
+          <text x="490" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">5% Traffic</text>
+          <text x="490" y="108" fill="#c084fc" font-size="9" text-anchor="middle">Complex High-Stakes</text>
+        </svg>
+      `
+    },
+    {
+      id: "short-6",
+      domain: "Domain 3: Evaluation & Optimization (16%)",
+      title: "Prompt Caching: The Cryptographic Prefix Rule",
+      hook: "Why did your 40,000-token prompt cache hit rate drop to 0%? You made this 1-character mistake.",
+      concept: "Anthropic prompt caching requires an <strong>exact cryptographic prefix match from token 0</strong>. If you place dynamic timestamps or session IDs at the beginning of the prompt, the entire cache is busted. Always order prompts: <strong>Static System Prompt ➡️ Reference Docs/Tools ➡️ Cache Point ➡️ Dynamic User Query</strong>.",
+      takeaway: "On the exam: Cache hit rate drops are almost always caused by dynamic variables placed before the cache checkpoint. Static content must always precede dynamic content.",
+      speech: "Prompt Caching: The Cryptographic Prefix Rule. Why did your prompt cache hit rate drop to zero? Anthropic prompt caching requires an exact prefix match from token zero. Placing a dynamic timestamp at the top of the prompt invalidates the cache for all subsequent tokens. Static instructions and documents must always come first.",
+      svg: `
+        <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
+          <rect x="20" y="45" width="150" height="70" rx="8" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" stroke-width="2"/>
+          <text x="95" y="75" fill="#4ade80" font-size="12" font-weight="700" text-anchor="middle">1. Static System Prompt</text>
+          <text x="95" y="95" fill="#86efac" font-size="10" text-anchor="middle">Cached Prefix (90% off)</text>
+
+          <rect x="185" y="45" width="150" height="70" rx="8" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" stroke-width="2"/>
+          <text x="260" y="75" fill="#4ade80" font-size="12" font-weight="700" text-anchor="middle">2. Large Reference Docs</text>
+          <text x="260" y="95" fill="#86efac" font-size="10" text-anchor="middle">Cached Prefix (90% off)</text>
+
+          <rect x="350" y="45" width="70" height="70" rx="8" fill="rgba(234, 179, 8, 0.2)" stroke="#eab308" stroke-width="2" class="pulse"/>
+          <text x="385" y="80" fill="#fde047" font-size="11" font-weight="700" text-anchor="middle">CACHE</text>
+          <text x="385" y="98" fill="#fde047" font-size="9" text-anchor="middle">POINT</text>
+
+          <rect x="435" y="45" width="145" height="70" rx="8" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="2"/>
+          <text x="507" y="75" fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle">3. Dynamic User Query</text>
+          <text x="507" y="95" fill="#bfdbfe" font-size="10" text-anchor="middle">Appended at End</text>
+        </svg>
+      `
+    }
+  ];
+
+  let currentShortIndex = 0;
+  let shortStreakCount = 1;
+  let isShortAudioPlaying = false;
+
+  function renderCurrentShort() {
+    const pill = SHORTS_PILLS[currentShortIndex];
+    if (!pill) return;
+
+    const domainBadge = document.getElementById("shorts-domain-badge");
+    if (domainBadge) domainBadge.textContent = pill.domain;
+
+    const counter = document.getElementById("shorts-pill-counter");
+    if (counter) counter.textContent = `Pill ${currentShortIndex + 1} of ${SHORTS_PILLS.length}`;
+
+    const streak = document.getElementById("shorts-streak-count");
+    if (streak) streak.textContent = shortStreakCount;
+    
+    const pct = Math.round(((currentShortIndex + 1) / SHORTS_PILLS.length) * 100);
+    const progressFill = document.getElementById("shorts-progress-fill");
+    if (progressFill) progressFill.style.width = `${pct}%`;
+
+    const titleEl = document.getElementById("shorts-title");
+    if (titleEl) titleEl.textContent = pill.title;
+
+    const hookEl = document.getElementById("shorts-hook");
+    if (hookEl) hookEl.textContent = pill.hook;
+
+    const conceptEl = document.getElementById("shorts-concept");
+    if (conceptEl) conceptEl.innerHTML = pill.concept;
+
+    const takeawayEl = document.getElementById("shorts-takeaway");
+    if (takeawayEl) takeawayEl.innerHTML = pill.takeaway;
+
+    const viewportEl = document.getElementById("shorts-infographic-viewport");
+    if (viewportEl) viewportEl.innerHTML = pill.svg;
+
+    if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+    isShortAudioPlaying = false;
+    const audioBtn = document.getElementById("btn-shorts-audio");
+    if (audioBtn) {
+      audioBtn.innerHTML = '<span>🔊</span> Listen (Web Audio)';
+    }
+  }
+
+  const btnShortsAudio = document.getElementById("btn-shorts-audio");
+  if (btnShortsAudio) {
+    btnShortsAudio.addEventListener("click", () => {
+      if (!('speechSynthesis' in window)) {
+        alert("Text-to-speech is not supported in this browser.");
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        isShortAudioPlaying = false;
+        btnShortsAudio.innerHTML = '<span>🔊</span> Listen (Web Audio)';
+        return;
+      }
+      const pill = SHORTS_PILLS[currentShortIndex];
+      if (!pill) return;
+      const utterance = new SpeechSynthesisUtterance(pill.speech);
+      utterance.rate = 1.05;
+      utterance.pitch = 1.0;
+      utterance.onend = () => {
+        isShortAudioPlaying = false;
+        btnShortsAudio.innerHTML = '<span>🔊</span> Listen (Web Audio)';
+      };
+      utterance.onerror = () => {
+        isShortAudioPlaying = false;
+        btnShortsAudio.innerHTML = '<span>🔊</span> Listen (Web Audio)';
+      };
+      isShortAudioPlaying = true;
+      btnShortsAudio.innerHTML = '<span>⏹️</span> Stop Audio';
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
+  const btnShortsNext = document.getElementById("btn-shorts-next");
+  if (btnShortsNext) {
+    btnShortsNext.addEventListener("click", () => {
+      shortStreakCount++;
+      currentShortIndex = (currentShortIndex + 1) % SHORTS_PILLS.length;
+      renderCurrentShort();
+    });
+  }
+
+  const btnShortsPrev = document.getElementById("btn-shorts-prev");
+  if (btnShortsPrev) {
+    btnShortsPrev.addEventListener("click", () => {
+      currentShortIndex = (currentShortIndex - 1 + SHORTS_PILLS.length) % SHORTS_PILLS.length;
+      renderCurrentShort();
+    });
+  }
+
+  // Initial UI state setup
+  updateTrackUI();
 
   // Initial Load (support deep-linking via URL hash)
   const initialHash = window.location.hash.replace('#', '');

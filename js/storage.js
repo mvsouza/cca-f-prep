@@ -1,20 +1,31 @@
 /**
- * LocalStorage Manager for CCA-F Prep
- * Tracks mastery level, consecutive rights, history, and mock exam results.
+ * LocalStorage Manager for Anthropic Exam Prep (Foundations & Professional)
+ * Tracks mastery level, consecutive rights, history, and mock exam results per certification track.
  */
 
-const STORAGE_KEYS = {
-  QUESTIONS: 'ccaf_custom_questions',
-  PROGRESS: 'ccaf_question_progress',
-  MOCKS: 'ccaf_mock_history',
-  SETTINGS: 'ccaf_settings'
-};
-
 class StudyStorage {
-  constructor() {
-    this.progress = this.load(STORAGE_KEYS.PROGRESS, {});
-    this.mockHistory = this.load(STORAGE_KEYS.MOCKS, []);
-    this.customQuestions = this.load(STORAGE_KEYS.QUESTIONS, []);
+  constructor(initialTrack = 'ccaf') {
+    this.currentTrack = localStorage.getItem('active_exam_track') || initialTrack;
+    this.reloadForTrack();
+  }
+
+  setTrack(track) {
+    this.currentTrack = track;
+    localStorage.setItem('active_exam_track', track);
+    this.reloadForTrack();
+  }
+
+  reloadForTrack() {
+    const prefix = this.currentTrack === 'ccarp' ? 'ccarp' : 'ccaf';
+    this.storageKeys = {
+      QUESTIONS: `${prefix}_custom_questions`,
+      PROGRESS: `${prefix}_question_progress`,
+      MOCKS: `${prefix}_mock_history`,
+      SETTINGS: `${prefix}_settings`
+    };
+    this.progress = this.load(this.storageKeys.PROGRESS, {});
+    this.mockHistory = this.load(this.storageKeys.MOCKS, []);
+    this.customQuestions = this.load(this.storageKeys.QUESTIONS, []);
   }
 
   load(key, fallback) {
@@ -35,9 +46,14 @@ class StudyStorage {
     }
   }
 
-  // Get combined question list (default + custom imported)
+  // Get combined question list (default + custom imported) based on active track
   getAllQuestions() {
-    const defaults = window.DEFAULT_EXAM_QUESTIONS || [];
+    let defaults = [];
+    if (this.currentTrack === 'ccarp') {
+      defaults = window.DEFAULT_EXAM_QUESTIONS_CCARP || [];
+    } else {
+      defaults = window.DEFAULT_EXAM_QUESTIONS || [];
+    }
     const custom = this.customQuestions || [];
     const map = new Map();
     
@@ -104,13 +120,13 @@ class StudyStorage {
     });
 
     // Save
-    this.save(STORAGE_KEYS.PROGRESS, this.progress);
+    this.save(this.storageKeys.PROGRESS, this.progress);
     return p;
   }
 
   recordMockExam(mockRecord) {
     this.mockHistory.push(mockRecord);
-    this.save(STORAGE_KEYS.MOCKS, this.mockHistory);
+    this.save(this.storageKeys.MOCKS, this.mockHistory);
 
     // Also update individual question progress from the mock exam
     if (mockRecord.answers && Array.isArray(mockRecord.answers)) {
@@ -133,7 +149,7 @@ class StudyStorage {
     });
 
     this.customQuestions = Array.from(existing.values());
-    this.save(STORAGE_KEYS.QUESTIONS, this.customQuestions);
+    this.save(this.storageKeys.QUESTIONS, this.customQuestions);
     return count;
   }
 
@@ -202,13 +218,14 @@ class StudyStorage {
   resetAllProgress() {
     this.progress = {};
     this.mockHistory = [];
-    localStorage.removeItem(STORAGE_KEYS.PROGRESS);
-    localStorage.removeItem(STORAGE_KEYS.MOCKS);
+    localStorage.removeItem(this.storageKeys.PROGRESS);
+    localStorage.removeItem(this.storageKeys.MOCKS);
   }
 
   exportData() {
     return JSON.stringify({
       version: 1,
+      track: this.currentTrack,
       exportedAt: new Date().toISOString(),
       progress: this.progress,
       mockHistory: this.mockHistory,
@@ -221,15 +238,15 @@ class StudyStorage {
       const data = JSON.parse(jsonString);
       if (data.progress) {
         this.progress = data.progress;
-        this.save(STORAGE_KEYS.PROGRESS, this.progress);
+        this.save(this.storageKeys.PROGRESS, this.progress);
       }
       if (data.mockHistory) {
         this.mockHistory = data.mockHistory;
-        this.save(STORAGE_KEYS.MOCKS, this.mockHistory);
+        this.save(this.storageKeys.MOCKS, this.mockHistory);
       }
       if (data.customQuestions) {
         this.customQuestions = data.customQuestions;
-        this.save(STORAGE_KEYS.QUESTIONS, this.customQuestions);
+        this.save(this.storageKeys.QUESTIONS, this.customQuestions);
       }
       return true;
     } catch (e) {

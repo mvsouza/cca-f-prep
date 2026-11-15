@@ -128,13 +128,27 @@ class MockExamEngine {
     const allQuestions = [...this.storage.getAllQuestions()];
     const count = Math.min(questionCount, allQuestions.length);
 
-    const weights = {
-      "Agentic Architecture & Orchestration": 0.27,
-      "Claude Code Configuration & Workflows": 0.20,
-      "Prompt Engineering & Structured Output": 0.20,
-      "Tool Design & Model Context Protocol (MCP) Integration": 0.18,
-      "Context Management & Reliability": 0.15
+    const blueprints = {
+      ccaf: {
+        "Agentic Architecture & Orchestration": 0.27,
+        "Claude Code Configuration & Workflows": 0.20,
+        "Prompt Engineering & Structured Output": 0.20,
+        "Tool Design & Model Context Protocol (MCP) Integration": 0.18,
+        "Context Management & Reliability": 0.15
+      },
+      ccarp: {
+        "Integration": 0.19,
+        "Solution Design & Architecture": 0.17,
+        "Evaluation, Testing & Optimization": 0.16,
+        "Governance, Safety & Risk Management": 0.14,
+        "Stakeholder Communication & Lifecycle Management": 0.14,
+        "Claude Models, Prompting & Context Engineering": 0.13,
+        "Developer Productivity & Operational Enablement": 0.07
+      }
     };
+
+    const track = this.storage.currentTrack || 'ccaf';
+    const weights = blueprints[track] || blueprints.ccaf;
 
     // Group questions by domain
     const byDomain = {};
@@ -151,6 +165,7 @@ class MockExamEngine {
     let allocated = 0;
 
     // Calculate target quota per domain
+    const firstDomain = Object.keys(weights)[0];
     Object.keys(weights).forEach(d => {
       const target = Math.round(count * weights[d]);
       domainTargets[d] = target;
@@ -158,8 +173,8 @@ class MockExamEngine {
     });
 
     // Adjust slight rounding difference against requested count
-    if (allocated !== count && domainTargets["Agentic Architecture & Orchestration"]) {
-      domainTargets["Agentic Architecture & Orchestration"] += (count - allocated);
+    if (allocated !== count && domainTargets[firstDomain] !== undefined) {
+      domainTargets[firstDomain] += (count - allocated);
     }
 
     // Sample from each domain according to target quota
