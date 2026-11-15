@@ -1423,25 +1423,92 @@ textarea.json-input {
   position: relative;
 }
 
-/* Visual Pulse & Animations */
+/* Visual Pulse & Flow Animations for Micro-Shorts */
 @keyframes pulseGlow {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
-  100% { transform: scale(1); opacity: 0.8; }
+  0% { 
+    filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.4)); 
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.95)) drop-shadow(0 0 25px rgba(217, 119, 6, 0.5)); 
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% { 
+    filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.4)); 
+    opacity: 0.85;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlowGreen {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.4));
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(34, 197, 94, 0.9));
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes pulseGlowBlue {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.4));
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(59, 130, 246, 0.9));
+    opacity: 1;
+    transform: scale(1.03);
+  }
 }
 
 @keyframes dataFlow {
-  0% { stroke-dashoffset: 24; }
-  100% { stroke-dashoffset: 0; }
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
-.pulse-anim {
-  animation: pulseGlow 2.5s infinite ease-in-out;
+@keyframes nodeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
-.flow-anim {
-  stroke-dasharray: 6, 6;
-  animation: dataFlow 1.2s infinite linear;
+.pulse, .pulse-anim {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.pulse-green {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulseGlowGreen 2s infinite ease-in-out;
+}
+
+.pulse-blue {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulseGlowBlue 2s infinite ease-in-out;
+}
+
+.dataFlow, .flow-anim {
+  stroke-dasharray: 8, 6 !important;
+  animation: dataFlow 0.9s infinite linear !important;
+}
+
+.float-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nodeFloat 3s infinite ease-in-out;
 }
 
 .shorts-takeaway-box {

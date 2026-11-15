@@ -878,15 +878,21 @@ https://mvsouza.com/cca-f-prep/`;
       speech: "Production MCP: Stdio versus SSE over HTTP. Why does local stdio MCP fail the moment you deploy to Kubernetes? stdio spawns a local child process meant only for local developer machines. In production clouds, you must use SSE over HTTP with mutual TLS and OAuth 2.0 bearer tokens.",
       svg: `
         <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
-          <rect x="30" y="30" width="240" height="105" rx="8" fill="rgba(239, 68, 68, 0.08)" stroke="#ef4444" stroke-width="1.5"/>
-          <text x="150" y="55" fill="#f87171" font-size="13" font-weight="700" text-anchor="middle">Local Stdio (CLI / Dev Only)</text>
-          <text x="150" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Child Process via stdin / stdout</text>
-          <text x="150" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">❌ No remote networking • Single host</text>
+          <!-- Local Stdio Block -->
+          <rect x="25" y="28" width="250" height="108" rx="8" fill="rgba(239, 68, 68, 0.08)" stroke="#ef4444" stroke-width="1.5"/>
+          <circle cx="45" cy="48" r="5" fill="#ef4444"/>
+          <text x="155" y="52" fill="#f87171" font-size="13" font-weight="700" text-anchor="middle">Local Stdio (CLI / Dev Only)</text>
+          <path d="M 50 82 L 250 82" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4"/>
+          <text x="150" y="78" fill="#cbd5e1" font-size="10" text-anchor="middle">stdin ⇄ stdout pipe</text>
+          <text x="150" y="105" fill="#fca5a5" font-size="9" text-anchor="middle">❌ Single-host child process only</text>
 
-          <rect x="330" y="30" width="240" height="105" rx="8" fill="rgba(34, 197, 94, 0.08)" stroke="#22c55e" stroke-width="1.5"/>
-          <text x="450" y="55" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Cloud SSE / HTTP (Production)</text>
-          <text x="450" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">mTLS + OAuth 2.0 JWT Bearer</text>
-          <text x="450" y="105" fill="#86efac" font-size="9" text-anchor="middle">✅ Scalable across Kubernetes & VPCs</text>
+          <!-- Cloud SSE/HTTP Block -->
+          <rect x="325" y="28" width="250" height="108" rx="8" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" stroke-width="1.8" class="pulse-green"/>
+          <circle cx="345" cy="48" r="5" fill="#22c55e" class="pulse"/>
+          <text x="455" y="52" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Cloud SSE / HTTP (Production)</text>
+          <path d="M 350 82 L 550 82" stroke="#4ade80" stroke-width="2" stroke-dasharray="6,4" class="dataFlow"/>
+          <text x="450" y="78" fill="#e2e8f0" font-size="10" text-anchor="middle">TLS 1.3 + OAuth 2.0 JWT Bearer</text>
+          <text x="450" y="105" fill="#86efac" font-size="9" font-weight="600" text-anchor="middle">⚡ Distributed Kubernetes / Multi-VPC</text>
         </svg>
       `
     },
@@ -929,15 +935,21 @@ https://mvsouza.com/cca-f-prep/`;
       speech: "Workflows versus Autonomous Agent Swarms. When should you not use an autonomous agent? If your task has strict latency SLAs, zero tolerance for deviation, and predictable steps, an autonomous agent loop will be too slow and non-deterministic. Use structured code workflow chains instead.",
       svg: `
         <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
-          <rect x="30" y="30" width="240" height="105" rx="8" fill="rgba(34, 197, 94, 0.08)" stroke="#22c55e" stroke-width="1.5"/>
-          <text x="150" y="55" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Deterministic Workflow</text>
-          <text x="150" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Step A ➡️ Step B ➡️ Strict JSON</text>
-          <text x="150" y="105" fill="#86efac" font-size="9" text-anchor="middle">⚡ SLA &lt; 2s • 100% Audit Trail</text>
+          <!-- Deterministic Workflow -->
+          <rect x="25" y="28" width="250" height="108" rx="8" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" stroke-width="1.8" class="pulse-green"/>
+          <text x="150" y="52" fill="#4ade80" font-size="13" font-weight="700" text-anchor="middle">Deterministic Workflow</text>
+          <path d="M 45 80 L 255 80" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="8,5" class="dataFlow"/>
+          <circle cx="80" cy="80" r="7" fill="#22c55e"/>
+          <circle cx="150" cy="80" r="7" fill="#22c55e"/>
+          <circle cx="220" cy="80" r="7" fill="#22c55e"/>
+          <text x="150" y="105" fill="#86efac" font-size="9" font-weight="600" text-anchor="middle">⚡ SLA &lt; 2s • 100% Audit Trail</text>
 
-          <rect x="330" y="30" width="240" height="105" rx="8" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" stroke-width="1.5"/>
-          <text x="450" y="55" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Autonomous Agent Loop</text>
-          <text x="450" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Plan 🔁 Tool 🔁 Evaluate Loop</text>
-          <text x="450" y="105" fill="#fde68a" font-size="9" text-anchor="middle">⚠️ Non-deterministic • Open-ended Only</text>
+          <!-- Autonomous Agent Loop -->
+          <rect x="325" y="28" width="250" height="108" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="1.8" class="pulse"/>
+          <text x="450" y="52" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Autonomous Agent Loop</text>
+          <path d="M 370 80 C 370 65, 530 65, 530 80 C 530 95, 370 95, 370 80" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,4" class="dataFlow" fill="none"/>
+          <text x="450" y="84" fill="#cbd5e1" font-size="9" text-anchor="middle">Plan 🔁 Tool 🔁 Eval</text>
+          <text x="450" y="115" fill="#fde68a" font-size="9" text-anchor="middle">⚠️ Non-deterministic • Open-ended only</text>
         </svg>
       `
     },
@@ -951,20 +963,27 @@ https://mvsouza.com/cca-f-prep/`;
       speech: "Three-Tier Model Cascading: Save 85% Cost. Sending every enterprise query to Opus throws money away. Use Claude 3.5 Haiku for sub-second intent classification on 80% of queries. Escalate coding and tool use to Sonnet, and reserve Opus exclusively for complex legal or mathematical reasoning.",
       svg: `
         <svg viewBox="0 0 600 160" width="100%" height="100%" style="font-family: inherit;">
-          <rect x="30" y="40" width="160" height="80" rx="8" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="2"/>
-          <text x="110" y="70" fill="#93c5fd" font-size="13" font-weight="700" text-anchor="middle">Haiku 3.5</text>
-          <text x="110" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">80% Traffic</text>
-          <text x="110" y="108" fill="#60a5fa" font-size="9" text-anchor="middle">Sub-second Triage</text>
+          <!-- Haiku Tier -->
+          <rect x="25" y="38" width="160" height="85" rx="8" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="2" class="pulse-blue"/>
+          <text x="105" y="65" fill="#93c5fd" font-size="13" font-weight="700" text-anchor="middle">Haiku 3.5</text>
+          <text x="105" y="85" fill="#f8fafc" font-size="11" text-anchor="middle">80% Traffic</text>
+          <text x="105" y="105" fill="#60a5fa" font-size="9" text-anchor="middle">Sub-second Triage</text>
 
-          <rect x="220" y="40" width="160" height="80" rx="8" fill="rgba(217, 119, 6, 0.15)" stroke="#d97706" stroke-width="2"/>
-          <text x="300" y="70" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Sonnet 3.5</text>
-          <text x="300" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">15% Traffic</text>
-          <text x="300" y="108" fill="#f59e0b" font-size="9" text-anchor="middle">Coding & Tool Agent</text>
+          <path d="M 185 80 L 225 80" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
 
-          <rect x="410" y="40" width="160" height="80" rx="8" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="2"/>
-          <text x="490" y="70" fill="#d8b4fe" font-size="13" font-weight="700" text-anchor="middle">Opus 3.5</text>
-          <text x="490" y="90" fill="#f8fafc" font-size="11" text-anchor="middle">5% Traffic</text>
-          <text x="490" y="108" fill="#c084fc" font-size="9" text-anchor="middle">Complex High-Stakes</text>
+          <!-- Sonnet Tier -->
+          <rect x="225" y="38" width="160" height="85" rx="8" fill="rgba(217, 119, 6, 0.15)" stroke="#d97706" stroke-width="2" class="pulse"/>
+          <text x="305" y="65" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Sonnet 3.5</text>
+          <text x="305" y="85" fill="#f8fafc" font-size="11" text-anchor="middle">15% Traffic</text>
+          <text x="305" y="105" fill="#f59e0b" font-size="9" text-anchor="middle">Coding & Tools</text>
+
+          <path d="M 385 80 L 425 80" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4" class="dataFlow"/>
+
+          <!-- Opus Tier -->
+          <rect x="425" y="38" width="150" height="85" rx="8" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="2"/>
+          <text x="500" y="65" fill="#d8b4fe" font-size="13" font-weight="700" text-anchor="middle">Opus 3.5</text>
+          <text x="500" y="85" fill="#f8fafc" font-size="11" text-anchor="middle">5% Traffic</text>
+          <text x="500" y="105" fill="#c084fc" font-size="9" text-anchor="middle">Complex Logic</text>
         </svg>
       `
     },
