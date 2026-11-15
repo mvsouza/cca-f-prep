@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-22c55e?style=for-the-badge&logo=github)](https://mvsouza.github.io/cca-f-prep/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-mvsouza.com-22c55e?style=for-the-badge&logo=googlechrome)](https://mvsouza.com/cca-f-prep/)
 [![GitHub Stars](https://img.shields.io/github/stars/mvsouza/cca-f-prep?style=for-the-badge&logo=github&color=d97706)](https://github.com/mvsouza/cca-f-prep)
 [![Question Bank](https://img.shields.io/badge/Question%20Bank-701%20Scenario%20Drills-blue?style=for-the-badge&logo=anthropic)](https://github.com/mvsouza/cca-f-prep)
 [![Benchmark](https://img.shields.io/badge/Passing%20Benchmark-720%20%2F%201000-success?style=for-the-badge)](https://github.com/mvsouza/cca-f-prep)
@@ -12,7 +12,7 @@
 
 **An interactive, browser-based exam simulator and spaced-repetition mastery engine designed specifically for the official Anthropic Claude Certified Architect – Foundations (CCA-F / CCAR-F) certification.**
 
-[🚀 Try Live Simulator](https://mvsouza.github.io/cca-f-prep/) • [📊 14-Day Study Plan & Pitch Deck](PITCH_DECK.md) • [🎁 Partner Voucher Guide](#6-🎟️-sponsored-exam-vouchers--pitch-deck)
+[🚀 Try Live Simulator](https://mvsouza.com/cca-f-prep/) • [📊 14-Day Study Plan & Pitch Deck](PITCH_DECK.md) • [🎁 Partner Voucher Guide](#6-🎟️-sponsored-exam-vouchers--pitch-deck)
 
 </div>
 
@@ -126,7 +126,7 @@ The app comes loaded with a comprehensive built-in bank of authentic scenario qu
    * Under **Build and deployment** → **Source**, select **GitHub Actions**.
 4. The workflow in `.github/workflows/deploy.yml` will automatically publish the application live to:
    ```
-   https://mvsouza.github.io/cca-f-prep/
+   https://mvsouza.com/cca-f-prep/
    ```
 
 ### 📊 Google Analytics 4 (GA4) Configuration

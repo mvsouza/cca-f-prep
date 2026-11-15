@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mvsouza.github.io/cca-f-prep/sitemap.xml
+Sitemap: https://mvsouza.com/cca-f-prep/sitemap.xml
